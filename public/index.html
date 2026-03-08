@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond The Horizon — Survival Adventure Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 2px solid #00d4ff;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        .user-status {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background: #d32f2f;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #b71c1c;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #b0b0b0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #00d4ff;
+            color: #00d4ff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00d4ff;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .feature-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .chapters-section {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .chapters-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #00d4ff;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .chapter-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #00d4ff;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .chapter-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .chapter-card h3 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-card p {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .auth-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 4rem 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .auth-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00d4ff;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .auth-card h2 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.7rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00d4ff;
+            color: #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            background: rgba(0, 212, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .form-group button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .error-msg, .success-msg {
+            padding: 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .error-msg {
+            background: rgba(211, 47, 47, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #d32f2f;
+        }
+
+        .success-msg {
+            background: rgba(0, 128, 0, 0.2);
+            color: #00ff88;
+            border: 1px solid #00aa00;
+        }
+
+        .admin-panel {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #ff6b00;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .admin-panel h2 {
+            color: #ff6b00;
+            margin-bottom: 1rem;
+        }
+
+        .admin-panel.hidden {
+            display: none;
+        }
+
+        .user-count {
+            font-size: 2rem;
+            color: #00d4ff;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #00d4ff;
+            margin-top: 4rem;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .auth-section {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">🌍 Beyond The Horizon</div>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#chapters">Chapters</a>
+                <div class="user-status" id="userStatus">Not logged in</div>
+                <button class="logout-btn hidden" id="logoutBtn">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Survive. Explore. Thrive.</h1>
+            <p>An immersive multiplayer survival adventure on a mysterious island.</p>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="playBtn">Launch Game</button>
+                <a href="https://itch.io" class="btn btn-secondary">Download on itch.io</a>
+                <button class="btn btn-secondary" id="learnMoreBtn">Learn More</button>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="feature-card">
+                <h3>🏝️ Explore</h3>
+                <p>Discover a vast island with diverse regions, resources, and secrets waiting to be uncovered.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🏗️ Craft & Build</h3>
+                <p>Gather resources, craft tools, and build shelters to survive on the island.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚔️ Combat</h3>
+                <p>Face wildlife threats and master combat skills to protect yourself.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🤝 Multiplayer</h3>
+                <p>Play with a friend in cooperative multiplayer mode and overcome challenges together.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📖 Quests</h3>
+                <p>Complete engaging quests that guide your survival journey.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🌙 Dynamic World</h3>
+                <p>Experience a realistic day/night cycle that affects gameplay and atmosphere.</p>
+            </div>
+        </section>
+
+        <section class="chapters-section" id="chapters">
+            <h2>Chapters</h2>
+            <div class="chapters-grid">
+                <div class="chapter-card">
+                    <h3>Chapter 1</h3>
+                    <p>Signal for Rescue</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Find your way and signal for help</p>
+                </div>
+                <div class="chapter-card">
+                    <h3>Chapter 2</h3>
+                    <p>The Shelter</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Establish a safe base of operations</p>
+                </div>
+                <div class="chapter-card">
+                    <h3>Chapter 3</h3>
+                    <p>Advanced Survival</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Master advanced crafting and exploration</p>
+                </div>
+                <div class="chapter-card">
+                    <h3>Chapter 4</h3>
+                    <p>The Mystery Unfolds</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Uncover the island's secrets</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="auth-section" id="authSection">
+            <div class="auth-card">
+                <h2>Sign In</h2>
+                <div id="loginError" class="error-msg hidden"></div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Sign In</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="auth-card">
+                <h2>Create Account</h2>
+                <div id="signupError" class="error-msg hidden"></div>
+                <div id="signupSuccess" class="success-msg hidden">Account created! Check your email to verify.</div>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="signupUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signupPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Create Account</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="admin-panel hidden" id="adminPanel">
+            <h2>📊 Admin Panel</h2>
+            <p>Total Registered Users:</p>
+            <div class="user-count" id="userCount">Loading...</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Beyond The Horizon. A thesis project. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // ── PASTE YOUR FIREBASE CONFIG HERE ──────────────────────────────
+        // (same values as in firebase_manager.gd)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCIGt-DtlrozWvkGK-t_j5puWGmqs4tzo",
+            authDomain: "beyond-the-horizon-v1.firebaseapp.com",
+            projectId: "beyond-the-horizon-v1",
+            storageBucket: "beyond-the-horizon-v1.firebasestorage.app",
+            messagingSenderId: "850783533019",
+            appId: "1:850783533019:web:b20688ff4727647d95d9fe",
+            measurementId: "G-YXT2NVYLP4"
+        };
+        // ─────────────────────────────────────────────────────────────────
+
+        // Admin emails — only these see the admin panel
+        const ADMIN_EMAILS = [""];  // ← put your email here so you can see the admin panel
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+                 sendEmailVerification, updateProfile, onAuthStateChanged, signOut
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, collection, getCountFromServer
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM elements
+        const authSection = document.getElementById("authSection");
+        const adminPanel = document.getElementById("adminPanel");
+        const userStatus = document.getElementById("userStatus");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+        const loginError = document.getElementById("loginError");
+        const signupError = document.getElementById("signupError");
+        const signupSuccess = document.getElementById("signupSuccess");
+
+        // Handle auth state changes
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is logged in
+                authSection.classList.add("hidden");
+                userStatus.textContent = `Logged in as ${user.displayName || user.email}`;
+                logoutBtn.classList.remove("hidden");
+
+                // Check if user is admin
+                if (ADMIN_EMAILS.includes(user.email)) {
+                    adminPanel.classList.remove("hidden");
+                    loadUserCount();
+                }
+            } else {
+                // User is logged out
+                authSection.classList.remove("hidden");
+                adminPanel.classList.add("hidden");
+                userStatus.textContent = "Not logged in";
+                logoutBtn.classList.add("hidden");
+            }
+        });
+
+        // Login form
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            try {
+                const userCred = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCred.user;
+
+                // Check if email is verified
+                await user.reload();
+                if (!user.emailVerified) {
+                    loginError.textContent = "Please verify your email before logging in.";
+                    loginError.classList.remove("hidden");
+                    await signOut(auth);
+                    return;
+                }
+
+                loginError.classList.add("hidden");
+                loginForm.reset();
+            } catch (error) {
+                loginError.textContent = error.message;
+                loginError.classList.remove("hidden");
+            }
+        });
+
+        // Signup form
+        signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = document.getElementById("signupUsername").value;
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+
+            try {
+                const userCred = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCred.user;
+
+                // Set display name
+                await updateProfile(user, { displayName: username });
+
+                // Send verification email
+                await sendEmailVerification(user);
+
+                signupError.classList.add("hidden");
+                signupSuccess.classList.remove("hidden");
+                signupSuccess.textContent = `Account created! Check your email (${email}) to verify your account.`;
+                signupForm.reset();
+
+                // Auto logout after signup so they have to login
+                await signOut(auth);
+            } catch (error) {
+                signupError.textContent = error.message;
+                signupError.classList.remove("hidden");
+                signupSuccess.classList.add("hidden");
+            }
+        });
+
+        // Logout button
+        logoutBtn.addEventListener("click", async () => {
+            await signOut(auth);
+        });
+
+        // Load user count for admin
+        async function loadUserCount() {
+            try {
+                const usersCollection = collection(db, "users");
+                const snapshot = await getCountFromServer(usersCollection);
+                document.getElementById("userCount").textContent = snapshot.data().count;
+            } catch (error) {
+                document.getElementById("userCount").textContent = "Error loading count";
+            }
+        }
+
+        // Button handlers
+        document.getElementById("playBtn").addEventListener("click", () => {
+            alert("Download the game from itch.io to play!");
+        });
+
+        document.getElementById("learnMoreBtn").addEventListener("click", () => {
+            document.getElementById("features").scrollIntoView({ behavior: "smooth" });
+        });
+    </script>
+</body>
+</html>
