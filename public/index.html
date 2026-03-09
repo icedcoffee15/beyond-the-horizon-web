@@ -193,27 +193,98 @@
         .chapter-card {
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid #00d4ff;
-            padding: 2rem;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.3s;
             cursor: pointer;
+            overflow: hidden;
+            padding-bottom: 1.2rem;
         }
 
         .chapter-card:hover {
             background: rgba(0, 212, 255, 0.1);
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+            transform: scale(1.04);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
         }
 
         .chapter-card h3 {
             color: #00ff88;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
+            padding: 0 1.2rem;
         }
 
         .chapter-card p {
             font-size: 0.9rem;
             color: #888;
+            padding: 0 1.2rem;
         }
+
+        .chapter-map-preview {
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-map-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .chapter-locked-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            color: #aaa;
+            font-size: 1rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        /* Player profile section */
+        .player-profile {
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid #00d4ff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem auto;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .player-profile h2 {
+            color: #00d4ff;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 212, 255, 0.07);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 8px;
+            padding: 1.4rem 2rem;
+            min-width: 140px;
+        }
+
+        .stat-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #00ff88; }
+        .stat-label { font-size: 0.82rem; color: #888; margin-top: 0.25rem; }
+        .profile-hint { font-size: 0.82rem; color: #555; margin-top: 1rem; }
 
         .auth-section {
             display: grid;
@@ -408,24 +479,32 @@
             <h2>Chapters</h2>
             <div class="chapters-grid">
                 <div class="chapter-card">
-                    <h3>Chapter 1</h3>
-                    <p>Signal for Rescue</p>
-                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Find your way and signal for help</p>
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0d4a1a, #1a7a2a, #3aa84a);">
+                        🌴
+                    </div>
+                    <h3>Chapter 1 — Signal for Rescue</h3>
+                    <p>Stranded on a tropical island. Gather resources, boil water, craft tools, and light signal flares before the volcano erupts.</p>
                 </div>
                 <div class="chapter-card">
-                    <h3>Chapter 2</h3>
-                    <p>The Shelter</p>
-                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Establish a safe base of operations</p>
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0a2a4a, #0d4a7a, #1a7aaa);">
+                        🌊
+                    </div>
+                    <h3>Chapter 2 — The Shelter</h3>
+                    <p>A massive tsunami is coming. Build a secure shelter, stock supplies, and survive the rising tide in a race against time.</p>
                 </div>
                 <div class="chapter-card">
-                    <h3>Chapter 3</h3>
-                    <p>Advanced Survival</p>
-                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Master advanced crafting and exploration</p>
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #3a1a00, #7a3a00, #c46200);">
+                        🏜️
+                    </div>
+                    <h3>Chapter 3 — Desert Crossing</h3>
+                    <p>Scorching desert terrain. Navigate shifting sands, dodge sandstorms, and find the radio tower to call for help.</p>
                 </div>
                 <div class="chapter-card">
-                    <h3>Chapter 4</h3>
-                    <p>The Mystery Unfolds</p>
-                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Uncover the island's secrets</p>
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #1a0a3a, #3a1a5a, #6a2a8a);">
+                        🚁
+                    </div>
+                    <h3>Chapter 4 — Final Map</h3>
+                    <p>The final frontier. Islands are sinking. Find the helicopter landing zone and signal for extraction before it's too late.</p>
                 </div>
             </div>
         </section>
@@ -482,6 +561,28 @@
             <p>Total Registered Users:</p>
             <div class="user-count" id="userCount">Loading...</div>
         </section>
+
+        <section class="player-profile hidden" id="playerProfile">
+            <h2>👤 My Profile</h2>
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🔓</div>
+                    <div class="stat-value" id="profileChapters">—</div>
+                    <div class="stat-label">Chapters Unlocked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🐾</div>
+                    <div class="stat-value" id="profileKills">—</div>
+                    <div class="stat-label">Animals Hunted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-value" id="profileEndless">—</div>
+                    <div class="stat-label">Endless Mode</div>
+                </div>
+            </div>
+            <p class="profile-hint">Stats sync automatically each time you play while signed in</p>
+        </section>
     </main>
 
     <footer>
@@ -510,7 +611,7 @@
                  sendEmailVerification, updateProfile, onAuthStateChanged, signOut,
                  sendPasswordResetEmail
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getFirestore, collection, getCountFromServer
+        import { getFirestore, collection, getCountFromServer, doc, getDoc
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         // Initialize Firebase
@@ -537,6 +638,10 @@
                 userStatus.textContent = `Logged in as ${user.displayName || user.email}`;
                 logoutBtn.classList.remove("hidden");
 
+                // Show profile stats
+                document.getElementById("playerProfile").classList.remove("hidden");
+                loadUserProfile(user);
+
                 // Check if user is admin
                 if (ADMIN_EMAILS.includes(user.email)) {
                     adminPanel.classList.remove("hidden");
@@ -546,10 +651,33 @@
                 // User is logged out
                 authSection.classList.remove("hidden");
                 adminPanel.classList.add("hidden");
+                document.getElementById("playerProfile").classList.add("hidden");
                 userStatus.textContent = "Not logged in";
                 logoutBtn.classList.add("hidden");
             }
         });
+
+        // Load user profile from Firestore
+        async function loadUserProfile(user) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const data = userDoc.data();
+                    const chapters = Array.isArray(data.unlocked_chapters) ? data.unlocked_chapters.length : 1;
+                    const kills = data.total_animals_killed || 0;
+                    const endless = data.endless_mode_unlocked ? "Unlocked" : "Locked";
+                    document.getElementById("profileChapters").textContent = `${chapters} / 5`;
+                    document.getElementById("profileKills").textContent = kills;
+                    document.getElementById("profileEndless").textContent = endless;
+                } else {
+                    document.getElementById("profileChapters").textContent = "1 / 5";
+                    document.getElementById("profileKills").textContent = "0";
+                    document.getElementById("profileEndless").textContent = "Locked";
+                }
+            } catch (error) {
+                console.error("Profile load error:", error);
+            }
+        }
 
         // Login form
         loginForm.addEventListener("submit", async (e) => {
