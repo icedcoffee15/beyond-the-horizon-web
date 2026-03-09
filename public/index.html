@@ -404,6 +404,81 @@
             color: #888;
         }
 
+        /* Download section */
+        .download-section {
+            text-align: center;
+            margin: 4rem 0;
+            padding: 3rem 2rem;
+            background: rgba(0, 255, 136, 0.04);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+        }
+        .download-section h2 { color: #00ff88; font-size: 2rem; margin-bottom: 0.5rem; }
+        .download-section p  { color: #888; margin-bottom: 2rem; }
+        .download-cards {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        .download-card {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 2rem;
+            min-width: 220px;
+            text-align: center;
+        }
+        .download-card h3 { color: #00d4ff; margin-bottom: 0.5rem; }
+        .download-card p  { color: #888; font-size: 0.85rem; margin-bottom: 1.2rem; }
+        .download-card .btn { display: inline-block; min-width: 160px; }
+
+        /* Multiplayer / Radmin section */
+        .multiplayer-section {
+            margin: 4rem 0;
+        }
+        .multiplayer-section h2 {
+            color: #00d4ff;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .multiplayer-section > p {
+            text-align: center;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+        .mp-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.5rem;
+        }
+        .mp-step {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .mp-step-num {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+        .mp-step h4  { color: #e0e0e0; margin-bottom: 0.4rem; }
+        .mp-step p   { color: #888; font-size: 0.88rem; }
+        .mp-note {
+            margin-top: 1.5rem;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 200, 0, 0.07);
+            border: 1px solid rgba(255, 200, 0, 0.25);
+            border-radius: 8px;
+            color: #ccc;
+            font-size: 0.88rem;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -431,6 +506,8 @@
             <nav>
                 <a href="#features">Features</a>
                 <a href="#chapters">Chapters</a>
+                <a href="#download">Download</a>
+                <a href="#multiplayer">Multiplayer</a>
                 <div class="user-status" id="userStatus">Not logged in</div>
                 <button class="logout-btn hidden" id="logoutBtn">Logout</button>
             </nav>
@@ -440,11 +517,11 @@
     <main>
         <section class="hero">
             <h1>Survive. Explore. Thrive.</h1>
-            <p>An immersive multiplayer survival adventure on a mysterious island.</p>
+            <p>An immersive multiplayer survival adventure across 4 unique maps.</p>
             <div class="btn-group">
-                <button class="btn btn-primary" id="playBtn">Launch Game</button>
-                <a href="https://itch.io" class="btn btn-secondary">Download on itch.io</a>
-                <button class="btn btn-secondary" id="learnMoreBtn">Learn More</button>
+                <a href="#download" class="btn btn-primary">⬇️ Download Free Demo</a>
+                <a href="https://beyond-the-horizon-game.itch.io/beyond-the-horizon" class="btn btn-secondary" target="_blank">🛒 Full Version on itch.io</a>
+                <a href="#multiplayer" class="btn btn-secondary">🤝 How to Play Together</a>
             </div>
         </section>
 
@@ -560,6 +637,54 @@
             <h2>📊 Admin Panel</h2>
             <p>Total Registered Users:</p>
             <div class="user-count" id="userCount">Loading...</div>
+        </section>
+
+        <!-- DOWNLOAD SECTION -->
+        <section class="download-section" id="download">
+            <h2>⬇️ Download the Game</h2>
+            <p>Play Chapter 1 for free, or get the full 4-chapter experience.</p>
+            <div class="download-cards">
+                <div class="download-card">
+                    <h3>🆓 Free Demo</h3>
+                    <p>Chapter 1 — Stranded on a tropical island. Includes full multiplayer co-op mode.</p>
+                    <a href="#" class="btn btn-primary" id="demoDownloadBtn">Download Demo</a>
+                    <p style="font-size:0.78rem; margin-top:0.7rem; color:#555;">Coming soon — check back here</p>
+                </div>
+                <div class="download-card">
+                    <h3>💎 Full Version</h3>
+                    <p>All 4 chapters + Endless Mode. Cloud saves, multiplayer, and the complete story.</p>
+                    <a href="https://beyond-the-horizon-game.itch.io/beyond-the-horizon" class="btn btn-secondary" target="_blank">Get on itch.io</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- MULTIPLAYER / RADMIN VPN SECTION -->
+        <section class="multiplayer-section" id="multiplayer">
+            <h2>🤝 Play With a Friend</h2>
+            <p>Beyond The Horizon supports 2-player co-op. Here's how to connect with a friend online.</p>
+            <div class="mp-steps">
+                <div class="mp-step">
+                    <div class="mp-step-num">1</div>
+                    <h4>Install Radmin VPN</h4>
+                    <p>Both players download and install <strong>Radmin VPN</strong> (free) from <a href="https://www.radmin-vpn.com" target="_blank" style="color:#00d4ff;">radmin-vpn.com</a>. This creates a virtual private network so you can play like you're on the same WiFi.</p>
+                </div>
+                <div class="mp-step">
+                    <div class="mp-step-num">2</div>
+                    <h4>Create or Join a Network</h4>
+                    <p>One player clicks <em>Create Network</em> and sets a name + password. The other player clicks <em>Join Network</em> and enters those same credentials.</p>
+                </div>
+                <div class="mp-step">
+                    <div class="mp-step-num">3</div>
+                    <h4>Host the Game</h4>
+                    <p>The host opens the game → Main Menu → <em>Multiplayer</em> → <em>Host Game</em>. The Radmin VPN IP is shown (e.g. <code style="color:#00ff88;">26.x.x.x</code>). Share it with your friend.</p>
+                </div>
+                <div class="mp-step">
+                    <div class="mp-step-num">4</div>
+                    <h4>Join the Game</h4>
+                    <p>The second player opens the game → Main Menu → <em>Multiplayer</em> → <em>Join Game</em> → enters the host's Radmin VPN IP → click <em>Connect</em>. Both players spawn on the map — game begins!</p>
+                </div>
+            </div>
+            <div class="mp-note">⚠️ Both players must be on the <strong>same Radmin VPN network</strong> for this to work. Standard LAN play also works if you're on the same WiFi.</div>
         </section>
 
         <section class="player-profile hidden" id="playerProfile">
@@ -773,14 +898,6 @@
             }
         }
 
-        // Button handlers
-        document.getElementById("playBtn").addEventListener("click", () => {
-            alert("Download the game from itch.io to play!");
-        });
-
-        document.getElementById("learnMoreBtn").addEventListener("click", () => {
-            document.getElementById("features").scrollIntoView({ behavior: "smooth" });
-        });
     </script>
 </body>
 </html>
