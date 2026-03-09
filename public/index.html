@@ -1309,49 +1309,7 @@ service cloud.firestore {
         };
         // Allow pressing Enter in status email field
         document.getElementById("statusEmail").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); checkOrderStatus(); } });
-);
-                listEl.innerHTML = "";
-                docs.forEach((docSnap) => {
-                    const d    = docSnap.data();
-                    const date = d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleString() : "—";
-                    const item = document.createElement("div");
-                    item.className = "order-item";
-                    item.innerHTML = `
-                        <div class="order-item-header">
-                            <span class="order-item-email">${escHtml(d.email)}</span>
-                            <span class="order-badge ${d.status === 'paid' ? 'paid' : 'pending'}">${d.status === 'paid' ? '\u2705 Paid' : '&#9203; Pending'}</span>
-                        </div>
-                        <div class="order-item-meta">&#8369;${d.amount || 50} PHP &middot; ${date}</div>
-                        <div class="order-item-ref">GCash Ref: <strong>${escHtml(d.ref_number)}</strong></div>
-                        ${d.status !== 'paid' ? `<button class="order-mark-paid" data-id="${docSnap.id}">&#10003; Mark as Paid &rarr; Send Download</button>` : `<span style="font-size:0.78rem;color:var(--accent-green);">&#11015; Download link sent via status checker</span><span id="dlcount-${docSnap.id}" style="font-size:0.75rem;color:#ffd040;margin-left:8px;">Loading download count...</span>`}
-                    `;
-                    listEl.appendChild(item);
-                });
-                listEl.querySelectorAll(".order-mark-paid").forEach(btn => {
-                    btn.addEventListener("click", async () => {
-                        btn.disabled = true; btn.textContent = "Saving...";
-                        try {
-                            await updateDoc(doc(db, "orders", btn.dataset.id), { status: "paid" });
-                                } catch(e) { btn.disabled = false; btn.textContent = "Error: " + e.message; }
-                    });
-                });
-                // ── Load download counts for paid orders ──────────────────
-                docs.forEach(async (docSnap) => {
-                    const d = docSnap.data();
-                    if (d.status !== "paid") return;
-                    const countEl = document.getElementById("dlcount-" + docSnap.id);
-                    if (!countEl) return;
-                    try {
-                        const dlQ    = query(collection(db, "download_records"), where("email", "==", d.email));
-                        const dlSnap = await getDocs(dlQ);
-                        const cnt    = dlSnap.size;
-                        countEl.textContent = cnt === 0 ? "(not yet downloaded)" : `(downloaded ${cnt}x)`;
-                    } catch(e) { countEl.textContent = ""; }
-                });
-            } catch(err) {
-                listEl.innerHTML = `<div class="orders-empty">Could not load orders: ${err.message}</div>`;
-            }
-        }
+
         // ── Download + purchase tracking ──────────────────────────────────
         window.trackDownload = async function(type) {
             try {
