@@ -5,11 +5,838 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beyond The Horizon — Survival Adventure Game</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --accent: #00d4ff;
+            --accent-green: #00c97a;
+            --bg: #0f1117;
+            --bg2: #151820;
+            --border: rgba(0,212,255,0.18);
+            --text: #e0e0e0;
+            --muted: #7a7a8a;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── Header ──────────────────────────────────────────────── */
+        header {
+            background: rgba(0,0,0,0.75);
+            border-bottom: 1px solid var(--border);
+            padding: 0.9rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+        nav { display: flex; gap: 2rem; align-items: center; }
+        nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
+        nav a:hover { color: var(--accent); }
+        .user-status { font-size: 0.85rem; color: var(--muted); }
+        .logout-btn {
+            padding: 0.4rem 1rem;
+            background: transparent;
+            border: 1px solid #c0392b;
+            color: #e74c3c;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover { background: rgba(231,76,60,0.12); }
+
+        /* ── Layout ──────────────────────────────────────────────── */
+        main { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* ── Hero ────────────────────────────────────────────────── */
+        .hero { text-align: center; padding: 5rem 0 4rem; }
+        .hero-eyebrow {
+            display: inline-block;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            margin-bottom: 1.4rem;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.15;
+        }
+        .hero p { font-size: 1.1rem; margin-bottom: 2.5rem; color: var(--muted); max-width: 560px; margin-left: auto; margin-right: auto; }
+        .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+        .btn {
+            padding: 0.75rem 1.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+        .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(0,212,255,0.35); }
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--accent);
+        }
+        .btn-secondary:hover { background: rgba(0,212,255,0.07); border-color: var(--accent); }
+
+        /* ── Section headings ────────────────────────────────────── */
+        .section-heading {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .section-heading h2 { font-size: 1.9rem; color: #fff; margin-bottom: 0.4rem; }
+        .section-heading p  { color: var(--muted); font-size: 0.95rem; }
+
+        /* ── Screenshots ─────────────────────────────────────────── */
+        .screenshots-section { margin: 4rem 0; }
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+        .screenshot-slot {
+            aspect-ratio: 16/9;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            overflow: hidden;
+            position: relative;
+        }
+        .screenshot-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+        }
+        .screenshot-slot .slot-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0.4;
+        }
+        .screenshot-slot .slot-placeholder svg { width: 36px; height: 36px; }
+
+        /* ── Features ────────────────────────────────────────────── */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 4rem 0;
+        }
+        .feature-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            padding: 1.8rem;
+            border-radius: 10px;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+        .feature-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .feature-card .fc-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+        .feature-card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+        .feature-card p  { font-size: 0.88rem; color: var(--muted); }
+
+        /* ── Chapters ────────────────────────────────────────────── */
+        .chapters-section { margin: 4rem 0; }
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        .chapter-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+        .chapter-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .chapter-map-preview {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+        .chapter-map-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.65) 100%);
+        }
+        .chapter-body { padding: 1.2rem; }
+        .chapter-body h3 { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+        .chapter-body p  { font-size: 0.82rem; color: var(--muted); }
+        .chapter-locked-badge {
+            position: absolute;
+            top: 8px; right: 8px;
+            background: rgba(0,0,0,0.65);
+            color: var(--muted);
+            font-size: 0.78rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        /* ── Player Profile ───────────────────────────────────────── */
+        .player-profile {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            margin: 4rem auto;
+            max-width: 900px;
+            text-align: center;
+        }
+        .player-profile h2 { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+        .player-profile > p { color: var(--muted); font-size: 0.88rem; margin-bottom: 2rem; }
+        .profile-stats { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+        .stat-card {
+            background: rgba(0,212,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.4rem 1.8rem;
+            min-width: 130px;
+            text-align: center;
+        }
+        .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent-green); }
+        .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.06em; }
+        .profile-hint { font-size: 0.78rem; color: #444; margin-top: 1.5rem; }
+
+        /* ── Auth ────────────────────────────────────────────────── */
+        .auth-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 4rem auto;
+            max-width: 900px;
+        }
+        .auth-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        .auth-card h2 { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.4rem; color: var(--muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+        .form-group input {
+            width: 100%;
+            padding: 0.65rem 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+        .form-group input:focus { outline: none; border-color: var(--accent); background: rgba(0,212,255,0.06); }
+        .form-group button {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: filter 0.2s, transform 0.2s;
+        }
+        .form-group button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .error-msg, .success-msg {
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.88rem;
+        }
+        .error-msg   { background: rgba(211,47,47,0.15); color: #ff7070; border: 1px solid rgba(211,47,47,0.4); }
+        .success-msg { background: rgba(0,201,122,0.12); color: var(--accent-green); border: 1px solid rgba(0,201,122,0.35); }
+
+        /* ── Admin Panel ─────────────────────────────────────────── */
+        .admin-panel {
+            background: var(--bg2);
+            border: 1px solid rgba(255,120,0,0.3);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 4rem 0;
+            text-align: center;
+        }
+        .admin-panel h2 { color: #ff9a00; font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .admin-panel p  { color: var(--muted); font-size: 0.88rem; margin-bottom: 0.5rem; }
+        .admin-panel.hidden { display: none; }
+        .user-count { font-size: 2.5rem; font-weight: 800; color: var(--accent); margin: 0.8rem 0; }
+        .admin-rules-note {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255,120,0,0.06);
+            border: 1px solid rgba(255,120,0,0.2);
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: #aaa;
+            text-align: left;
+        }
+        .admin-rules-note code {
+            display: block;
+            margin-top: 0.5rem;
+            background: rgba(0,0,0,0.4);
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            color: var(--accent-green);
+            white-space: pre;
+        }
+
+        /* ── Download ────────────────────────────────────────────── */
+        .download-section {
+            margin: 4rem 0;
+            padding: 3rem 2rem;
+            background: var(--bg2);
+            border: 1px solid rgba(0,201,122,0.2);
+            border-radius: 12px;
+            text-align: center;
+        }
+        .download-cards { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+        .download-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem;
+            min-width: 220px;
+            text-align: center;
+        }
+        .download-card h3 { color: #fff; font-size: 1rem; margin-bottom: 0.4rem; }
+        .download-card p  { color: var(--muted); font-size: 0.82rem; margin-bottom: 1.2rem; }
+        .download-card .coming-soon { font-size: 0.75rem; margin-top: 0.6rem; color: #555; }
+
+        /* ── Multiplayer ─────────────────────────────────────────── */
+        .multiplayer-section { margin: 4rem 0; }
+        .mp-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+        }
+        .mp-step {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .mp-step-num { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; }
+        .mp-step h4  { color: #fff; font-size: 0.95rem; margin-bottom: 0.4rem; }
+        .mp-step p   { color: var(--muted); font-size: 0.85rem; }
+        .mp-note {
+            margin-top: 1.5rem;
+            padding: 0.9rem 1.3rem;
+            background: rgba(255,200,0,0.05);
+            border: 1px solid rgba(255,200,0,0.2);
+            border-radius: 8px;
+            color: #aaa;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* ── Footer ─────────────────────────────────────────────── */
+        footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 5rem;
+            color: #444;
+            font-size: 0.85rem;
+        }
+
+        /* ── Divider ─────────────────────────────────────────────── */
+        .divider { height: 1px; background: var(--border); margin: 4rem 0; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .auth-section { grid-template-columns: 1fr; }
+            nav { flex-direction: column; gap: 0.8rem; }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Beyond The Horizon</div>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#chapters">Chapters</a>
+                <a href="#screenshots">Gallery</a>
+                <a href="#download">Download</a>
+                <a href="#multiplayer">Multiplayer</a>
+                <div class="user-status" id="userStatus">Not signed in</div>
+                <button class="logout-btn hidden" id="logoutBtn">Sign Out</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- ── Hero ──────────────────────────────────────────────── -->
+        <section class="hero">
+            <div class="hero-eyebrow">Thesis Game Project · Godot 4.5</div>
+            <h1>Survive. Explore.<br>Find Your Way Home.</h1>
+            <p>A 2-player cooperative survival adventure across four unique environments. Craft tools, complete quests, and signal for rescue before it's too late.</p>
+            <div class="btn-group">
+                <a href="#download" class="btn btn-primary">Download Free Demo</a>
+                <a href="https://beyond-the-horizon-game.itch.io/beyond-the-horizon" class="btn btn-secondary" target="_blank">Full Version on itch.io</a>
+                <a href="#multiplayer" class="btn btn-secondary">How to Play Co-op</a>
+            </div>
+        </section>
+
+        <!-- ── Screenshots ────────────────────────────────────────── -->
+        <section class="screenshots-section" id="screenshots">
+            <div class="section-heading">
+                <h2>Game Screenshots</h2>
+                <p>A look at the world of Beyond The Horizon</p>
+            </div>
+            <div class="screenshots-grid">
+                <div class="screenshot-slot">
+                    <div class="slot-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span>Screenshot coming soon</span>
+                    </div>
+                </div>
+                <div class="screenshot-slot">
+                    <div class="slot-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span>Screenshot coming soon</span>
+                    </div>
+                </div>
+                <div class="screenshot-slot">
+                    <div class="slot-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        <span>Screenshot coming soon</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ── Features ───────────────────────────────────────────── -->
+        <section class="features" id="features">
+            <div class="feature-card">
+                <div class="fc-icon">🏝️</div>
+                <h3>Open World Exploration</h3>
+                <p>Discover a vast island with diverse biomes, hidden resources, and secrets waiting to be uncovered.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon">🔨</div>
+                <h3>Crafting & Survival</h3>
+                <p>Gather materials, craft tools, cook food, and manage hunger, thirst, and weight to stay alive.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon">⚔️</div>
+                <h3>Wildlife & Combat</h3>
+                <p>Face predatory animals across every map. Craft weapons and learn when to fight and when to flee.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon">👥</div>
+                <h3>2-Player Co-op</h3>
+                <p>Team up with a friend online using Radmin VPN. Share quests, resources, and survive together.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon">📋</div>
+                <h3>Quest System</h3>
+                <p>Follow a structured quest chain in each chapter — from gathering firewood to signalling a rescue helicopter.</p>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon">🌙</div>
+                <h3>Dynamic Day/Night Cycle</h3>
+                <p>A real-time day/night system that changes lighting, animal behaviour, and survival difficulty.</p>
+            </div>
+        </section>
+
+        <!-- ── Chapters ────────────────────────────────────────────── -->
+        <section class="chapters-section" id="chapters">
+            <div class="section-heading">
+                <h2>Four Chapters. Four Environments.</h2>
+                <p>Each chapter is a standalone scenario with its own map, quest chain, and survival challenge.</p>
+            </div>
+            <div class="chapters-grid">
+                <div class="chapter-card">
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0d4a1a, #1a7a2a, #3aa84a);">🌴</div>
+                    <div class="chapter-body">
+                        <h3>Chapter 1 — Signal for Rescue</h3>
+                        <p>Stranded on a tropical island. Gather resources, boil water, craft tools, and light signal flares before the volcano erupts.</p>
+                    </div>
+                </div>
+                <div class="chapter-card">
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0a2a4a, #0d4a7a, #1a7aaa);">🌊</div>
+                    <div class="chapter-body">
+                        <h3>Chapter 2 — The Shelter</h3>
+                        <p>A massive tsunami is approaching. Build a secure shelter, stock supplies, and survive the rising tide.</p>
+                    </div>
+                </div>
+                <div class="chapter-card">
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #3a1a00, #7a3a00, #c46200);">🏜️</div>
+                    <div class="chapter-body">
+                        <h3>Chapter 3 — Desert Crossing</h3>
+                        <p>Scorching desert terrain. Navigate shifting sands, avoid sandstorms, and find the radio tower to call for help.</p>
+                    </div>
+                </div>
+                <div class="chapter-card">
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #1a0a3a, #3a1a5a, #6a2a8a);">🚁</div>
+                    <div class="chapter-body">
+                        <h3>Chapter 4 — Final Extraction</h3>
+                        <p>The islands are sinking. Locate the helicopter landing zone and signal for extraction before time runs out.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ── Auth ────────────────────────────────────────────────── -->
+        <section class="auth-section" id="authSection">
+            <div class="auth-card">
+                <h2>Sign In</h2>
+                <div id="loginError" class="error-msg hidden"></div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Sign In</button>
+                    </div>
+                    <div style="text-align:center; margin-top:0.5rem;">
+                        <button id="forgotPasswordBtn" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:0.85rem;text-decoration:underline;">Forgot password?</button>
+                    </div>
+                    <div id="resetMsg" class="success-msg hidden"></div>
+                </form>
+            </div>
+
+            <div class="auth-card">
+                <h2>Create Account</h2>
+                <div id="signupError" class="error-msg hidden"></div>
+                <div id="signupSuccess" class="success-msg hidden">Account created! Check your email to verify.</div>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="signupUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signupPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Create Account</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ── Player Profile ─────────────────────────────────────── -->
+        <section class="player-profile hidden" id="playerProfile">
+            <h2>My Profile</h2>
+            <p>Progress syncs automatically each time you play while signed in.</p>
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="profileChapters">—</div>
+                    <div class="stat-label">Chapters Unlocked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="profileKills">—</div>
+                    <div class="stat-label">Animals Hunted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="profileFish">—</div>
+                    <div class="stat-label">Fish Caught</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="profileEndless">—</div>
+                    <div class="stat-label">Endless Mode</div>
+                </div>
+            </div>
+            <p class="profile-hint">Play the game and progress will appear here automatically.</p>
+        </section>
+
+        <!-- ── Admin Panel ────────────────────────────────────────── -->
+        <section class="admin-panel hidden" id="adminPanel">
+            <h2>Admin Panel</h2>
+            <p>Total Registered Users</p>
+            <div class="user-count" id="userCount">Loading...</div>
+            <div class="admin-rules-note hidden" id="adminRulesNote">
+                The user count requires updated Firestore security rules. In Firebase Console → Firestore → Rules, replace your current rules with:
+                <code>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null && (
+        request.auth.uid == userId ||
+        request.auth.token.email == 'dodoy.jericho@gmail.com'
+      );
+    }
+  }
+}</code>
+            </div>
+        </section>
+
+        <!-- ── Download ────────────────────────────────────────────── -->
+        <section class="download-section" id="download">
+            <div class="section-heading">
+                <h2>Download the Game</h2>
+                <p>Play Chapter 1 for free, or get the full 4-chapter experience.</p>
+            </div>
+            <div class="download-cards">
+                <div class="download-card">
+                    <h3>Free Demo</h3>
+                    <p>Chapter 1 — Stranded on a tropical island. Multiplayer co-op included.</p>
+                    <a href="#" class="btn btn-primary" id="demoDownloadBtn">Download Demo</a>
+                    <p class="coming-soon">Coming soon — check back here</p>
+                </div>
+                <div class="download-card">
+                    <h3>Full Version</h3>
+                    <p>All 4 chapters + Endless Mode. Cloud saves, multiplayer, and the complete story.</p>
+                    <a href="https://beyond-the-horizon-game.itch.io/beyond-the-horizon" class="btn btn-secondary" target="_blank">Get on itch.io</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Multiplayer ─────────────────────────────────────────── -->
+        <section class="multiplayer-section" id="multiplayer">
+            <div class="section-heading">
+                <h2>Playing With a Friend</h2>
+                <p>Beyond The Horizon supports 2-player co-op online via Radmin VPN.</p>
+            </div>
+            <div class="mp-steps">
+                <div class="mp-step">
+                    <div class="mp-step-num">01</div>
+                    <h4>Install Radmin VPN</h4>
+                    <p>Both players download and install <strong>Radmin VPN</strong> (free) from <a href="https://www.radmin-vpn.com" target="_blank" style="color:var(--accent);">radmin-vpn.com</a>. It creates a virtual LAN so you connect as if on the same network.</p>
+                </div>
+                <div class="mp-step">
+                    <div class="mp-step-num">02</div>
+                    <h4>Create or Join a Network</h4>
+                    <p>One player clicks <em>Create Network</em> with a name and password. The other clicks <em>Join Network</em> and enters those same credentials.</p>
+                </div>
+                <div class="mp-step">
+                    <div class="mp-step-num">03</div>
+                    <h4>Host the Session</h4>
+                    <p>The host opens the game, goes to Multiplayer → Host Game. Your Radmin VPN IP (e.g. <code style="color:var(--accent-green);">26.x.x.x</code>) is shown in the lobby. Share it with your friend.</p>
+                </div>
+                <div class="mp-step">
+                    <div class="mp-step-num">04</div>
+                    <h4>Join and Play</h4>
+                    <p>The second player goes to Multiplayer → Join Game, enters the host's Radmin VPN IP, and clicks Connect. Both players spawn on the map.</p>
+                </div>
+            </div>
+            <div class="mp-note">Both players must be on the same Radmin VPN network. Standard LAN play is also supported if you're on the same WiFi.</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Beyond The Horizon &mdash; A thesis project. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCIGt-DtlrozWvkGK-t_j5puWGmqs4tzo",
+            authDomain: "beyond-the-horizon-v1.firebaseapp.com",
+            projectId: "beyond-the-horizon-v1",
+            storageBucket: "beyond-the-horizon-v1.firebasestorage.app",
+            messagingSenderId: "850783533019",
+            appId: "1:850783533019:web:b20688ff4727647d95d9fe",
+            measurementId: "G-YXT2NVYLP4"
+        };
+
+        const ADMIN_EMAILS = ["dodoy.jericho@gmail.com"];
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+                 sendEmailVerification, updateProfile, onAuthStateChanged, signOut,
+                 sendPasswordResetEmail
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, collection, getCountFromServer, doc, getDoc
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const app  = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db   = getFirestore(app);
+
+        const authSection  = document.getElementById("authSection");
+        const adminPanel   = document.getElementById("adminPanel");
+        const userStatus   = document.getElementById("userStatus");
+        const logoutBtn    = document.getElementById("logoutBtn");
+        const loginForm    = document.getElementById("loginForm");
+        const signupForm   = document.getElementById("signupForm");
+        const loginError   = document.getElementById("loginError");
+        const signupError  = document.getElementById("signupError");
+        const signupSuccess= document.getElementById("signupSuccess");
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                authSection.classList.add("hidden");
+                userStatus.textContent = user.displayName || user.email;
+                logoutBtn.classList.remove("hidden");
+                document.getElementById("playerProfile").classList.remove("hidden");
+                loadUserProfile(user);
+                if (ADMIN_EMAILS.includes(user.email)) {
+                    adminPanel.classList.remove("hidden");
+                    loadUserCount();
+                }
+            } else {
+                authSection.classList.remove("hidden");
+                adminPanel.classList.add("hidden");
+                document.getElementById("playerProfile").classList.add("hidden");
+                userStatus.textContent = "Not signed in";
+                logoutBtn.classList.add("hidden");
+            }
+        });
+
+        async function loadUserProfile(user) {
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const data = userDoc.data();
+                    const chapters = Array.isArray(data.unlocked_chapters) ? data.unlocked_chapters.length : 1;
+                    document.getElementById("profileChapters").textContent = `${chapters} / 5`;
+                    document.getElementById("profileKills").textContent    = data.total_animals_killed || 0;
+                    document.getElementById("profileFish").textContent     = data.total_fish_caught    || 0;
+                    document.getElementById("profileEndless").textContent  = data.endless_mode_unlocked ? "Unlocked" : "Locked";
+                } else {
+                    document.getElementById("profileChapters").textContent = "1 / 5";
+                    document.getElementById("profileKills").textContent    = "0";
+                    document.getElementById("profileFish").textContent     = "0";
+                    document.getElementById("profileEndless").textContent  = "Locked";
+                }
+            } catch (err) {
+                console.error("Profile load error:", err);
+            }
+        }
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email    = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            try {
+                const userCred = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCred.user;
+                await user.reload();
+                if (!user.emailVerified) {
+                    loginError.textContent = "Please verify your email before signing in.";
+                    loginError.classList.remove("hidden");
+                    await signOut(auth);
+                    return;
+                }
+                loginError.classList.add("hidden");
+                loginForm.reset();
+            } catch (err) {
+                loginError.textContent = err.message;
+                loginError.classList.remove("hidden");
+            }
+        });
+
+        signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = document.getElementById("signupUsername").value;
+            const email    = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+            try {
+                const userCred = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCred.user;
+                await updateProfile(user, { displayName: username });
+                await sendEmailVerification(user);
+                signupError.classList.add("hidden");
+                signupSuccess.classList.remove("hidden");
+                signupSuccess.textContent = `Account created! Check ${email} for a verification link.`;
+                signupForm.reset();
+                await signOut(auth);
+            } catch (err) {
+                signupError.textContent = err.message;
+                signupError.classList.remove("hidden");
+                signupSuccess.classList.add("hidden");
+            }
+        });
+
+        logoutBtn.addEventListener("click", async () => { await signOut(auth); });
+
+        document.getElementById("forgotPasswordBtn").addEventListener("click", async () => {
+            const email    = document.getElementById("loginEmail").value.trim();
+            const resetMsg = document.getElementById("resetMsg");
+            if (!email) {
+                loginError.textContent = "Enter your email above first, then click Forgot Password.";
+                loginError.classList.remove("hidden");
+                return;
+            }
+            try {
+                await sendPasswordResetEmail(auth, email);
+                resetMsg.textContent = `Password reset link sent to ${email}.`;
+                resetMsg.classList.remove("hidden");
+                loginError.classList.add("hidden");
+            } catch (err) {
+                loginError.textContent = err.message;
+                loginError.classList.remove("hidden");
+            }
+        });
+
+        async function loadUserCount() {
+            try {
+                const snapshot = await getCountFromServer(collection(db, "users"));
+                document.getElementById("userCount").textContent = snapshot.data().count;
+            } catch (err) {
+                document.getElementById("userCount").textContent = "—";
+                document.getElementById("adminRulesNote").classList.remove("hidden");
+            }
+        }
+    </script>
+</body>
+</html>
+
 
         body {
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
