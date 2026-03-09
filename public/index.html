@@ -1254,29 +1254,37 @@ service cloud.firestore {
 
         // ── Order status checker ──────────────────────────────────────────
         window.checkOrderStatus = async function() {
-            const email  = document.getElementById("statusEmail").value.trim();
+            const email  = document.getElementById("statusEmail").value.trim().toLowerCase();
             const result = document.getElementById("statusResult");
             result.className = ""; result.style.display = "none"; result.innerHTML = "";
             if (!email) { result.className = "notfound"; result.innerHTML = "Enter your email above."; return; }
+            result.className = "pending"; result.innerHTML = "Checking...";
             try {
-                const q    = query(collection(db, "orders"), where("email", "==", email), orderBy("timestamp", "desc"));
+                // No orderBy — avoids composite index requirement. Sort client-side.
+                const q    = query(collection(db, "orders"), where("email", "==", email));
                 const snap = await getDocs(q);
                 if (snap.empty) {
                     result.className = "notfound";
                     result.innerHTML = "No order found for this email. Double-check spelling or submit a new order above.";
                     return;
                 }
-                const latest = snap.docs[0].data();
+                // Sort client-side: paid first, then by timestamp desc
+                const docs = snap.docs.map(d => d.data()).sort((a, b) => {
+                    if (a.status === "paid" && b.status !== "paid") return -1;
+                    if (b.status === "paid" && a.status !== "paid") return 1;
+                    return (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0);
+                });
+                const latest = docs[0];
                 if (latest.status === "paid") {
                     result.className = "paid";
-                    result.innerHTML = `&#127881; <strong>Payment verified!</strong> Your download is ready:<br><a href="https://drive.google.com/uc?export=download&id=1yfNByZe590DB2iA06cJpev8qYthfTtM-" target="_blank" rel="noopener" style="color:var(--accent-green); font-weight:700;">&#11015; Click here to download the Full Game</a>`;
+                    result.innerHTML = `&#127881; <strong>Payment verified!</strong> Your download is ready:<br><a href="https://drive.google.com/uc?export=download&id=1yfNByZe590DB2iA06cJpev8qYthfTtM-" target="_blank" rel="noopener" style="color:var(--accent-green); font-weight:700; font-size:1rem;">&#11015; Download Full Game</a>`;
                 } else {
                     result.className = "pending";
-                    result.innerHTML = `&#9203; <strong>Order pending verification</strong> &mdash; Ref: <strong>${escHtml(latest.ref_number)}</strong><br><span style="font-size:0.8rem;">We manually verify GCash payments. Usually within a few minutes. If it takes longer, email us at <a href="mailto:dodoy.jericho@gmail.com" style="color:var(--accent);">dodoy.jericho@gmail.com</a></span>`;
+                    result.innerHTML = `&#9203; <strong>Payment pending verification</strong><br>Ref submitted: <strong>${escHtml(latest.ref_number)}</strong><br><span style="font-size:0.8rem; color:#bbb;">We check GCash manually — usually within a few minutes. Refresh this page and check again, or email <a href="mailto:dodoy.jericho@gmail.com" style="color:var(--accent);">dodoy.jericho@gmail.com</a> if it takes too long.</span>`;
                 }
             } catch(err) {
                 result.className = "notfound";
-                result.innerHTML = "Error checking status: " + err.message;
+                result.innerHTML = "Error: " + err.message + " — make sure Firestore rules are published.";
             }
         };
         // Allow pressing Enter in status email field
