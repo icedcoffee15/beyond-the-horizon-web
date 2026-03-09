@@ -589,7 +589,7 @@
             <p>A survival adventure across four unique environments. Craft tools, complete quests, and signal for rescue before it's too late.</p>
             <div class="btn-group">
                 <a href="#download" class="btn btn-primary">&#11015; Download Free Demo</a>
-                <a href="#download" class="btn btn-secondary" onclick="document.getElementById('checkoutModal').classList.add('open'); return false;">&#128722; Buy Full Version &mdash; &#8369;50</a>
+                <a href="https://jerichodoy.gumroad.com/l/uiexqq" target="_blank" rel="noopener" class="btn btn-secondary">&#128722; Buy Full Version &mdash; &#8369;50</a>
                 <a href="#multiplayer" class="btn btn-secondary">&#127918; How to Play Co-op</a>
             </div>
         </section>
@@ -841,9 +841,10 @@ service cloud.firestore {
                     <div class="badge-paid">&#8369;50</div>
                     <h3>Full Version &mdash; All 4 Chapters</h3>
                     <p>Chapters 1&ndash;4 + Endless Mode. Multiplayer co-op, cloud saves, full story.</p>
-                    <button class="btn btn-secondary" onclick="document.getElementById('checkoutModal').classList.add('open')" style="width:100%; cursor:pointer;">
-                        &#128722; Buy via GCash &mdash; &#8369;50
-                    </button>
+                    <a href="https://jerichodoy.gumroad.com/l/uiexqq" target="_blank" rel="noopener" class="btn btn-secondary" style="width:100%; display:block; text-align:center; box-sizing:border-box;">
+                        &#128722; Buy Now &mdash; &#8369;50
+                    </a>
+                    <p style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.5rem;">Secure checkout via Gumroad &mdash; card, GCash, PayPal accepted. Download delivered instantly.</p>
                 </div>
             </div>
         </section>
@@ -879,55 +880,24 @@ service cloud.firestore {
             <div class="mp-note">Both players must be on the same Radmin VPN network. Standard LAN play is also supported if you're on the same WiFi.</div>
         </section>
 
-        <!-- ── GCash Checkout Modal ─────────────────────────────────────────── -->
+        <!-- ── Gumroad Checkout Modal ──────────────────────────────────────── -->
         <div class="modal-overlay" id="checkoutModal">
-            <div class="modal-box">
+            <div class="modal-box" style="text-align:center;">
                 <button class="modal-close" id="modalCloseBtn">&times;</button>
-                <h3>&#128179; Buy Full Version &mdash; &#8369;50</h3>
-                <p class="modal-sub">Send exactly <strong>&#8369;50</strong> via GCash, then submit your reference number. Download unlocks after we verify.</p>
-
-                <div class="gcash-info">
-                    <div class="gcash-info-row">
-                        <img src="screenshots/qr%20code.jpg" alt="GCash QR Code" class="gcash-qr">
-                        <div class="gcash-info-text">
-                            <div class="gcash-logo">GCash</div>
-                            <div class="gcash-number">0969 523 0282</div>
-                            <div class="gcash-name">JE****O D.</div>
-                            <div class="gcash-amount">&#8369;50.00 EXACT</div>
-                        </div>
-                    </div>
+                <h3>&#128722; Buy Full Version &mdash; &#8369;50</h3>
+                <p class="modal-sub">Secure checkout powered by <strong>Gumroad</strong>. Accepts GCash, credit/debit card, and PayPal. Download link delivered instantly after payment.</p>
+                <a href="https://jerichodoy.gumroad.com/l/uiexqq" target="_blank" rel="noopener"
+                   style="display:inline-block; margin:1rem 0 0.5rem; padding:0.85rem 2.2rem; background:var(--accent); color:#111; font-weight:800; font-size:1.1rem; border-radius:10px; text-decoration:none; letter-spacing:0.02em;">
+                    &#128722; Purchase on Gumroad &mdash; &#8369;50
+                </a>
+                <p style="font-size:0.78rem; color:var(--muted); margin-top:0.5rem;">You will be redirected to Gumroad's secure checkout page.</p>
+                <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border); text-align:left;">
+                    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.4rem;">&#9989; Already purchased? Check your Gumroad receipt email for the download link, or visit your <a href="https://app.gumroad.com/library" target="_blank" style="color:var(--accent);">Gumroad Library</a>.</p>
                 </div>
-
-                <div class="order-steps">
-                    <div class="step"><div class="step-num">1</div><span>Scan the QR or open GCash &rarr; Send Money &rarr; enter <strong>0969 523 0282</strong> &rarr; Amount: <strong>&#8369;50 exactly</strong></span></div>
-                    <div class="step"><div class="step-num">2</div><span>Copy the <strong>reference number</strong> from your GCash receipt (the long number).</span></div>
-                    <div class="step"><div class="step-num">3</div><span>Fill the form below &rarr; submit. Come back and check your status to get your download link once verified.</span></div>
-                </div>
-
-                <form id="checkoutForm">
-                    <div class="form-group">
-                        <label>Your Email</label>
-                        <input type="email" id="orderEmail" placeholder="you@email.com" required autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label>GCash Reference Number</label>
-                        <input type="text" id="orderRef" placeholder="e.g. 1234567890123" required autocomplete="off" pattern="[0-9]{8,15}" title="Enter the numeric reference number from your GCash receipt">
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" id="checkoutSubmitBtn">&#10003; Submit Order</button>
-                    </div>
-                </form>
-                <div id="checkoutMsg"></div>
-
-                <!-- Status checker - always visible so user can come back later -->
-                <div class="status-checker">
-                    <h4>&#128269; Already submitted? Check your order status:</h4>
-                    <div class="input-row">
-                        <input type="email" id="statusEmail" placeholder="Enter your email" autocomplete="off">
-                        <button onclick="checkOrderStatus()">Check</button>
-                    </div>
-                    <div id="statusResult"></div>
-                </div>
+                <!-- Hidden legacy elements so old JS references don't error -->
+                <form id="checkoutForm" style="display:none"><input id="orderEmail" type="email"><input id="orderRef" type="text"><button type="submit" id="checkoutSubmitBtn"></button></form>
+                <div id="checkoutMsg" style="display:none"></div>
+                <div style="display:none"><input id="statusEmail"><div id="statusResult"></div></div>
             </div>
         </div>
 
@@ -959,8 +929,8 @@ service cloud.firestore {
     <button class="help-fab" id="helpFab" title="Help">?</button>
     <div class="help-panel" id="helpPanel">
         <h4>&#10067; Need Help?</h4>
-        <p><strong>Paid but no download?</strong><br>Open the checkout modal and use the <em>"Check your order status"</em> section with your email.</p>
-        <p><strong>Wrong reference number?</strong><br>Submit a new order with the correct one and note it in the email field.</p>
+        <p><strong>Paid but no download link?</strong><br>Check your email inbox (including spam) for a receipt from Gumroad. Or visit your <a href="https://app.gumroad.com/library" target="_blank" style="color:var(--accent);">Gumroad Library</a>.</p>
+        <p><strong>Payment issues?</strong><br>Gumroad accepts GCash, credit/debit card, and PayPal. Make sure pop-ups are allowed.</p>
         <p><strong>Contact us:</strong><br><a href="mailto:dodoy.jericho@gmail.com">dodoy.jericho@gmail.com</a></p>
     </div>
 
