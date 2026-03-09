@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beyond The Horizon â€” Survival Adventure Game</title>
+    <title>Beyond The Horizon — Survival Adventure Game</title>
     <style>
         :root {
             --accent: #00d4ff;
@@ -455,22 +455,28 @@
                 <p>A look at the world of Beyond The Horizon</p>
             </div>
             <div class="screenshots-grid">
+                <!-- TO ADD SCREENSHOTS: Delete each slot-placeholder div and replace with an img tag.
+                     Example: <img src="screenshots/screenshot1.jpg" alt="Gameplay" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                     Steps: 1) Create screenshots folder in public/ 
+                            2) Save your game screenshots there as screenshot1.jpg, screenshot2.jpg, screenshot3.jpg
+                            3) Replace the placeholder divs with img tags above
+                -->
                 <div class="screenshot-slot">
                     <div class="slot-placeholder">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                        <span>Screenshot coming soon</span>
+                        <span>Screenshot 1</span>
                     </div>
                 </div>
                 <div class="screenshot-slot">
                     <div class="slot-placeholder">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                        <span>Screenshot coming soon</span>
+                        <span>Screenshot 2</span>
                     </div>
                 </div>
                 <div class="screenshot-slot">
                     <div class="slot-placeholder">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                        <span>Screenshot coming soon</span>
+                        <span>Screenshot 3</span>
                     </div>
                 </div>
             </div>
@@ -560,11 +566,11 @@
                 <form id="loginForm">
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" id="loginEmail" required>
+                        <input type="email" id="loginEmail" required autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" id="loginPassword" required>
+                        <input type="password" id="loginPassword" required autocomplete="new-password">
                     </div>
                     <div class="form-group">
                         <button type="submit">Sign In</button>
@@ -583,15 +589,15 @@
                 <form id="signupForm">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" id="signupUsername" required>
+                        <input type="text" id="signupUsername" required autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" id="signupEmail" required>
+                        <input type="email" id="signupEmail" required autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" id="signupPassword" required>
+                        <input type="password" id="signupPassword" required autocomplete="new-password">
                     </div>
                     <div class="form-group">
                         <button type="submit">Create Account</button>
