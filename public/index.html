@@ -993,7 +993,6 @@ service cloud.firestore {
                     adminPanel.classList.remove("hidden");
                     loadUserCount();
                     loadBugReports();
-                    loadOrders();
                     loadAnalyticsChart();
                 }
             } else {
@@ -1310,22 +1309,7 @@ service cloud.firestore {
         };
         // Allow pressing Enter in status email field
         document.getElementById("statusEmail").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); checkOrderStatus(); } });
-
-        // ── Orders: admin load ────────────────────────────────────────────
-        async function loadOrders() {
-            const listEl = document.getElementById("ordersList");
-            listEl.innerHTML = '<div class="orders-empty">Loading...</div>';
-            try {
-                // No orderBy — avoids Firestore composite index requirement. Sort client-side.
-                const snap = await getDocs(collection(db, "orders"));
-                if (snap.empty) { listEl.innerHTML = '<div class="orders-empty">No orders yet.</div>'; return; }
-                // Sort: pending first, then by timestamp desc
-                const docs = snap.docs.sort((a, b) => {
-                    const ad = a.data(), bd = b.data();
-                    if (ad.status !== "paid" && bd.status === "paid") return -1;
-                    if (ad.status === "paid" && bd.status !== "paid") return 1;
-                    return (bd.timestamp?.seconds || 0) - (ad.timestamp?.seconds || 0);
-                });
+);
                 listEl.innerHTML = "";
                 docs.forEach((docSnap) => {
                     const d    = docSnap.data();
@@ -1348,8 +1332,7 @@ service cloud.firestore {
                         btn.disabled = true; btn.textContent = "Saving...";
                         try {
                             await updateDoc(doc(db, "orders", btn.dataset.id), { status: "paid" });
-                            loadOrders();
-                        } catch(e) { btn.disabled = false; btn.textContent = "Error: " + e.message; }
+                                } catch(e) { btn.disabled = false; btn.textContent = "Error: " + e.message; }
                     });
                 });
                 // ── Load download counts for paid orders ──────────────────
