@@ -1226,7 +1226,7 @@ service cloud.firestore {
             e.preventDefault();
             const btn    = document.getElementById("checkoutSubmitBtn");
             const msgEl  = document.getElementById("checkoutMsg");
-            const email  = document.getElementById("orderEmail").value.trim();
+            const email  = document.getElementById("orderEmail").value.trim().toLowerCase();
             const ref    = document.getElementById("orderRef").value.trim();
             btn.disabled = true;
             btn.textContent = "Submitting...";
@@ -1239,13 +1239,12 @@ service cloud.firestore {
                     timestamp: serverTimestamp()
                 });
                 await addDoc(collection(db, "download_events"), { type: "full_order", timestamp: serverTimestamp() });
-                msgEl.textContent = "\u23F3 Order submitted! We'll verify your GCash payment shortly. Use the status checker below (enter your email) to check when your download is ready.";
+                msgEl.textContent = "\u23F3 Order submitted for: " + email + ". Use the status checker below to check when your download is ready.";
                 msgEl.className = "success";
                 btn.textContent = "\u2713 Submitted";
-                // Pre-fill status checker with submitted email
                 document.getElementById("statusEmail").value = email;
             } catch(err) {
-                msgEl.textContent = "Error: " + err.message;
+                msgEl.textContent = "Submit error: " + err.message;
                 msgEl.className = "error";
                 btn.disabled = false;
                 btn.textContent = "Submit Order";
@@ -1295,11 +1294,18 @@ service cloud.firestore {
             const listEl = document.getElementById("ordersList");
             listEl.innerHTML = '<div class="orders-empty">Loading...</div>';
             try {
-                const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
-                const snap = await getDocs(q);
+                // No orderBy — avoids Firestore composite index requirement. Sort client-side.
+                const snap = await getDocs(collection(db, "orders"));
                 if (snap.empty) { listEl.innerHTML = '<div class="orders-empty">No orders yet.</div>'; return; }
+                // Sort: pending first, then by timestamp desc
+                const docs = snap.docs.sort((a, b) => {
+                    const ad = a.data(), bd = b.data();
+                    if (ad.status !== "paid" && bd.status === "paid") return -1;
+                    if (ad.status === "paid" && bd.status !== "paid") return 1;
+                    return (bd.timestamp?.seconds || 0) - (ad.timestamp?.seconds || 0);
+                });
                 listEl.innerHTML = "";
-                snap.forEach((docSnap) => {
+                docs.forEach((docSnap) => {
                     const d    = docSnap.data();
                     const date = d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleString() : "—";
                     const item = document.createElement("div");
@@ -1311,7 +1317,7 @@ service cloud.firestore {
                         </div>
                         <div class="order-item-meta">&#8369;${d.amount || 50} PHP &middot; ${date}</div>
                         <div class="order-item-ref">GCash Ref: <strong>${escHtml(d.ref_number)}</strong></div>
-                        ${d.status !== 'paid' ? `<button class="order-mark-paid" data-id="${docSnap.id}">&#10003; Mark as Paid</button>` : ''}
+                        ${d.status !== 'paid' ? `<button class="order-mark-paid" data-id="${docSnap.id}">&#10003; Mark as Paid &rarr; Send Download</button>` : '<span style="font-size:0.78rem;color:var(--accent-green);">&#11015; Download link sent via status checker</span>'}
                     `;
                     listEl.appendChild(item);
                 });
@@ -1321,7 +1327,7 @@ service cloud.firestore {
                         try {
                             await updateDoc(doc(db, "orders", btn.dataset.id), { status: "paid" });
                             loadOrders();
-                        } catch(e) { btn.textContent = "Error"; }
+                        } catch(e) { btn.disabled = false; btn.textContent = "Error: " + e.message; }
                     });
                 });
             } catch(err) {
