@@ -384,14 +384,41 @@
         .gcash-info .gcash-number { font-size:1.5rem; font-weight:700; color:#fff; letter-spacing:0.08em; margin:0.3rem 0; }
         .gcash-info .gcash-name { color:var(--muted); font-size:0.85rem; }
         .gcash-info .gcash-amount { display:inline-block; margin-top:0.6rem; background:rgba(255,200,0,0.15); color:#ffd040; border-radius:20px; padding:0.25rem 1rem; font-size:1rem; font-weight:700; }
+        .gcash-qr { width:130px; height:130px; object-fit:contain; border-radius:8px; border:2px solid rgba(0,97,255,0.4); margin-top:0.8rem; }
+        .gcash-info-row { display:flex; gap:1.2rem; align-items:center; justify-content:center; flex-wrap:wrap; }
+        .gcash-info-text { text-align:center; }
         .order-steps { margin-bottom:1.3rem; }
         .order-steps .step { display:flex; gap:0.7rem; align-items:flex-start; margin-bottom:0.6rem; font-size:0.85rem; color:var(--text); }
         .order-steps .step-num { background:var(--accent); color:#000; border-radius:50%; width:20px; height:20px; min-width:20px; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:800; margin-top:1px; }
         #checkoutMsg { display:none; padding:0.9rem; border-radius:8px; font-size:0.88rem; margin-top:0.8rem; text-align:center; }
         #checkoutMsg.success { background:rgba(0,201,122,0.12); border:1px solid rgba(0,201,122,0.3); color:var(--accent-green); display:block; }
         #checkoutMsg.error   { background:rgba(220,50,50,0.12); border:1px solid rgba(220,50,50,0.3); color:#f88; display:block; }
+        .pending-notice { margin-top:1rem; padding:1rem; background:rgba(255,200,0,0.07); border:1px solid rgba(255,200,0,0.25); border-radius:8px; text-align:center; font-size:0.85rem; color:#ffd040; }
         .download-link-reveal { margin-top:1rem; padding:1rem; background:rgba(0,201,122,0.08); border:1px solid rgba(0,201,122,0.25); border-radius:8px; text-align:center; }
         .download-link-reveal p { font-size:0.82rem; color:var(--muted); margin-bottom:0.6rem; }
+        /* Status checker */
+        .status-checker { margin-top:1.2rem; border-top:1px solid var(--border); padding-top:1.2rem; }
+        .status-checker h4 { color:#ccc; font-size:0.88rem; margin-bottom:0.7rem; }
+        .status-checker .input-row { display:flex; gap:0.5rem; }
+        .status-checker input { flex:1; padding:0.5rem 0.7rem; background:rgba(255,255,255,0.07); border:1px solid var(--border); border-radius:6px; color:#fff; font-size:0.85rem; }
+        .status-checker button { padding:0.5rem 0.9rem; background:var(--accent); color:#000; border:none; border-radius:6px; font-size:0.82rem; font-weight:700; cursor:pointer; white-space:nowrap; }
+        #statusResult { margin-top:0.7rem; font-size:0.85rem; padding:0.7rem; border-radius:6px; display:none; }
+        #statusResult.pending { background:rgba(255,200,0,0.07); border:1px solid rgba(255,200,0,0.25); color:#ffd040; display:block; }
+        #statusResult.paid    { background:rgba(0,201,122,0.10); border:1px solid rgba(0,201,122,0.3);  color:var(--accent-green); display:block; }
+        #statusResult.notfound{ background:rgba(220,50,50,0.08);  border:1px solid rgba(220,50,50,0.3);  color:#f88; display:block; }
+        /* Help button */
+        .help-fab { position:fixed; bottom:1.5rem; right:1.5rem; z-index:500; background:var(--accent); color:#000; border:none; border-radius:50%; width:46px; height:46px; font-size:1.3rem; font-weight:800; cursor:pointer; box-shadow:0 4px 18px rgba(0,212,255,0.35); transition:transform 0.2s; }
+        .help-fab:hover { transform:scale(1.1); }
+        .help-panel { display:none; position:fixed; bottom:4.8rem; right:1.5rem; z-index:500; background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.2rem; max-width:280px; box-shadow:0 8px 32px rgba(0,0,0,0.5); }
+        .help-panel.open { display:block; }
+        .help-panel h4 { color:#fff; margin-bottom:0.8rem; font-size:0.95rem; }
+        .help-panel p  { color:var(--muted); font-size:0.82rem; margin-bottom:0.5rem; }
+        .help-panel a  { color:var(--accent); }
+        /* Earnings summary */
+        .earnings-row { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+        .earnings-card { flex:1; min-width:120px; background:rgba(255,208,64,0.08); border:1px solid rgba(255,208,64,0.25); border-radius:8px; padding:0.8rem 1rem; text-align:center; }
+        .earnings-card .earn-val { font-size:1.4rem; font-weight:800; color:#ffd040; }
+        .earnings-card .earn-lbl { font-size:0.75rem; color:var(--muted); margin-top:0.2rem; }
 
         /* ── Orders (Admin) ── */
         .orders-header { display:flex; justify-content:space-between; align-items:center; margin:1.5rem 0 0.8rem; }
@@ -411,7 +438,7 @@
 
         /* ── Analytics Chart ── */
         .chart-container { margin-top:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:1.2rem; }
-        .chart-container h3 { color:#fff; font-size:0.95rem; margin-bottom:1rem; }
+        .chart-container h3 { color:#fff; font-size:0.95rem; margin-bottom:0.7rem; }
 
         /* â”€â”€ Multiplayer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .multiplayer-section { margin: 4rem 0; }
@@ -769,9 +796,10 @@ service cloud.firestore {
   }
 }</code>
             </div>
-            <!-- Analytics Chart -->
+            <!-- Analytics -->
             <div class="chart-container">
                 <h3>&#128202; Downloads &amp; Orders (Last 7 Days)</h3>
+                <div class="earnings-row" id="earningsRow"></div>
                 <canvas id="analyticsChart" height="100"></canvas>
             </div>
 
@@ -854,21 +882,26 @@ service cloud.firestore {
         <!-- ── GCash Checkout Modal ─────────────────────────────────────────── -->
         <div class="modal-overlay" id="checkoutModal">
             <div class="modal-box">
-                <button class="modal-close" onclick="document.getElementById('checkoutModal').classList.remove('open'); document.getElementById('checkoutForm').reset(); document.getElementById('checkoutMsg').className=''; document.getElementById('checkoutMsg').style.display='none'; document.getElementById('downloadReveal').style.display='none';">&times;</button>
+                <button class="modal-close" id="modalCloseBtn">&times;</button>
                 <h3>&#128179; Buy Full Version &mdash; &#8369;50</h3>
-                <p class="modal-sub">Complete payment via GCash, then submit your reference number below.</p>
+                <p class="modal-sub">Send exactly <strong>&#8369;50</strong> via GCash, then submit your reference number. Download unlocks after we verify.</p>
 
                 <div class="gcash-info">
-                    <div class="gcash-logo">GCash</div>
-                    <div class="gcash-number">0969 523 0282</div>
-                    <div class="gcash-name">JE****O D.</div>
-                    <div class="gcash-amount">&#8369;50.00</div>
+                    <div class="gcash-info-row">
+                        <img src="screenshots/qr%20code.jpg" alt="GCash QR Code" class="gcash-qr">
+                        <div class="gcash-info-text">
+                            <div class="gcash-logo">GCash</div>
+                            <div class="gcash-number">0969 523 0282</div>
+                            <div class="gcash-name">JE****O D.</div>
+                            <div class="gcash-amount">&#8369;50.00 EXACT</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="order-steps">
-                    <div class="step"><div class="step-num">1</div><span>Open GCash &rarr; Send Money &rarr; enter the number above &rarr; Amount: <strong>&#8369;50</strong></span></div>
-                    <div class="step"><div class="step-num">2</div><span>Copy the <strong>13-digit reference number</strong> from your GCash receipt.</span></div>
-                    <div class="step"><div class="step-num">3</div><span>Fill the form below and submit. Download link will be provided.</span></div>
+                    <div class="step"><div class="step-num">1</div><span>Scan the QR or open GCash &rarr; Send Money &rarr; enter <strong>0969 523 0282</strong> &rarr; Amount: <strong>&#8369;50 exactly</strong></span></div>
+                    <div class="step"><div class="step-num">2</div><span>Copy the <strong>reference number</strong> from your GCash receipt (the long number).</span></div>
+                    <div class="step"><div class="step-num">3</div><span>Fill the form below &rarr; submit. Come back and check your status to get your download link once verified.</span></div>
                 </div>
 
                 <form id="checkoutForm">
@@ -878,17 +911,22 @@ service cloud.firestore {
                     </div>
                     <div class="form-group">
                         <label>GCash Reference Number</label>
-                        <input type="text" id="orderRef" placeholder="e.g. 1234567890123" required autocomplete="off" pattern="[0-9]{10,15}" title="Enter the numeric reference number from your GCash receipt">
+                        <input type="text" id="orderRef" placeholder="e.g. 1234567890123" required autocomplete="off" pattern="[0-9]{8,15}" title="Enter the numeric reference number from your GCash receipt">
                     </div>
                     <div class="form-group">
                         <button type="submit" id="checkoutSubmitBtn">&#10003; Submit Order</button>
                     </div>
                 </form>
                 <div id="checkoutMsg"></div>
-                <div id="downloadReveal" class="download-link-reveal" style="display:none;">
-                    <p>&#127881; Order received! Your download link:</p>
-                    <a href="https://drive.google.com/uc?export=download&id=1yfNByZe590DB2iA06cJpev8qYthfTtM-" target="_blank" rel="noopener" class="btn btn-primary" style="display:inline-block; margin-top:0.3rem;">&#11015; Download Full Game</a>
-                    <p style="margin-top:0.6rem; font-size:0.75rem; color:var(--muted);">Keep this page open. Payment will be verified by the developer within minutes.</p>
+
+                <!-- Status checker - always visible so user can come back later -->
+                <div class="status-checker">
+                    <h4>&#128269; Already submitted? Check your order status:</h4>
+                    <div class="input-row">
+                        <input type="email" id="statusEmail" placeholder="Enter your email" autocomplete="off">
+                        <button onclick="checkOrderStatus()">Check</button>
+                    </div>
+                    <div id="statusResult"></div>
                 </div>
             </div>
         </div>
@@ -915,6 +953,17 @@ service cloud.firestore {
         </section>
     </main>
 
+    </main>
+
+    <!-- Help FAB -->
+    <button class="help-fab" id="helpFab" title="Help">?</button>
+    <div class="help-panel" id="helpPanel">
+        <h4>&#10067; Need Help?</h4>
+        <p><strong>Paid but no download?</strong><br>Open the checkout modal and use the <em>"Check your order status"</em> section with your email.</p>
+        <p><strong>Wrong reference number?</strong><br>Submit a new order with the correct one and note it in the email field.</p>
+        <p><strong>Contact us:</strong><br><a href="mailto:dodoy.jericho@gmail.com">dodoy.jericho@gmail.com</a></p>
+    </div>
+
     <footer>
         <p>&copy; 2026 Beyond The Horizon &mdash; A thesis project. All rights reserved.</p>
     </footer>
@@ -939,7 +988,7 @@ service cloud.firestore {
                  sendPasswordResetEmail
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
         import { getFirestore, collection, getCountFromServer, doc, getDoc,
-                 addDoc, getDocs, orderBy, query, serverTimestamp, updateDoc
+                 addDoc, getDocs, orderBy, query, where, serverTimestamp, updateDoc
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const app  = initializeApp(firebaseConfig);
@@ -1157,22 +1206,26 @@ service cloud.firestore {
 
         document.getElementById("bugRefreshBtn").addEventListener("click", loadBugReports);
 
-        // ── Demo download tracking ─────────────────────────────────────────
-        window.trackDownload = async function(type) {
-            try {
-                await addDoc(collection(db, "download_events"), {
-                    type,
-                    timestamp: serverTimestamp()
-                });
-            } catch(e) { /* non-critical */ }
-        };
+        // ── Modal close button ────────────────────────────────────────────
+        document.getElementById("modalCloseBtn").addEventListener("click", () => {
+            document.getElementById("checkoutModal").classList.remove("open");
+            document.getElementById("checkoutForm").reset();
+            const msgEl = document.getElementById("checkoutMsg");
+            msgEl.className = ""; msgEl.style.display = "none";
+            const sr = document.getElementById("statusResult");
+            sr.className = ""; sr.style.display = "none"; sr.innerHTML = "";
+        });
+
+        // ── Help FAB ─────────────────────────────────────────────────────
+        document.getElementById("helpFab").addEventListener("click", () => {
+            document.getElementById("helpPanel").classList.toggle("open");
+        });
 
         // ── GCash Checkout form ───────────────────────────────────────────
         document.getElementById("checkoutForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const btn    = document.getElementById("checkoutSubmitBtn");
             const msgEl  = document.getElementById("checkoutMsg");
-            const reveal = document.getElementById("downloadReveal");
             const email  = document.getElementById("orderEmail").value.trim();
             const ref    = document.getElementById("orderRef").value.trim();
             btn.disabled = true;
@@ -1185,12 +1238,12 @@ service cloud.firestore {
                     status: "pending",
                     timestamp: serverTimestamp()
                 });
-                // Track as download event
                 await addDoc(collection(db, "download_events"), { type: "full_order", timestamp: serverTimestamp() });
-                msgEl.textContent = "\u2705 Order received! Reference number recorded. Verify payment below to get your download.";
+                msgEl.textContent = "\u23F3 Order submitted! We'll verify your GCash payment shortly. Use the status checker below (enter your email) to check when your download is ready.";
                 msgEl.className = "success";
-                reveal.style.display = "block";
                 btn.textContent = "\u2713 Submitted";
+                // Pre-fill status checker with submitted email
+                document.getElementById("statusEmail").value = email;
             } catch(err) {
                 msgEl.textContent = "Error: " + err.message;
                 msgEl.className = "error";
@@ -1198,6 +1251,36 @@ service cloud.firestore {
                 btn.textContent = "Submit Order";
             }
         });
+
+        // ── Order status checker ──────────────────────────────────────────
+        window.checkOrderStatus = async function() {
+            const email  = document.getElementById("statusEmail").value.trim();
+            const result = document.getElementById("statusResult");
+            result.className = ""; result.style.display = "none"; result.innerHTML = "";
+            if (!email) { result.className = "notfound"; result.innerHTML = "Enter your email above."; return; }
+            try {
+                const q    = query(collection(db, "orders"), where("email", "==", email), orderBy("timestamp", "desc"));
+                const snap = await getDocs(q);
+                if (snap.empty) {
+                    result.className = "notfound";
+                    result.innerHTML = "No order found for this email. Double-check spelling or submit a new order above.";
+                    return;
+                }
+                const latest = snap.docs[0].data();
+                if (latest.status === "paid") {
+                    result.className = "paid";
+                    result.innerHTML = `&#127881; <strong>Payment verified!</strong> Your download is ready:<br><a href="https://drive.google.com/uc?export=download&id=1yfNByZe590DB2iA06cJpev8qYthfTtM-" target="_blank" rel="noopener" style="color:var(--accent-green); font-weight:700;">&#11015; Click here to download the Full Game</a>`;
+                } else {
+                    result.className = "pending";
+                    result.innerHTML = `&#9203; <strong>Order pending verification</strong> &mdash; Ref: <strong>${escHtml(latest.ref_number)}</strong><br><span style="font-size:0.8rem;">We manually verify GCash payments. Usually within a few minutes. If it takes longer, email us at <a href="mailto:dodoy.jericho@gmail.com" style="color:var(--accent);">dodoy.jericho@gmail.com</a></span>`;
+                }
+            } catch(err) {
+                result.className = "notfound";
+                result.innerHTML = "Error checking status: " + err.message;
+            }
+        };
+        // Allow pressing Enter in status email field
+        document.getElementById("statusEmail").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); checkOrderStatus(); } });
 
         // ── Orders: admin load ────────────────────────────────────────────
         async function loadOrders() {
@@ -1237,15 +1320,45 @@ service cloud.firestore {
                 listEl.innerHTML = `<div class="orders-empty">Could not load orders: ${err.message}</div>`;
             }
         }
-        document.getElementById("ordersRefreshBtn").addEventListener("click", loadOrders);
+        // ── Demo download tracking ─────────────────────────────────────────
+        window.trackDownload = async function(type) {
+            try {
+                await addDoc(collection(db, "download_events"), { type, timestamp: serverTimestamp() });
+            } catch(e) { /* non-critical */ }
+        };
 
+        document.getElementById("ordersRefreshBtn").addEventListener("click", loadOrders);
         // ── Analytics Chart ───────────────────────────────────────────────
         let analyticsChartInstance = null;
         async function loadAnalyticsChart() {
             try {
+                // Earnings summary from paid orders
+                const ordSnap = await getDocs(collection(db, "orders"));
+                let totalEarned = 0, totalOrders = 0, paidOrders = 0, thisMonthEarned = 0;
+                const now = new Date();
+                ordSnap.forEach(d => {
+                    const od = d.data();
+                    totalOrders++;
+                    if (od.status === "paid") {
+                        paidOrders++;
+                        totalEarned += (od.amount || 50);
+                        if (od.timestamp) {
+                            const oDate = new Date(od.timestamp.seconds * 1000);
+                            if (oDate.getMonth() === now.getMonth() && oDate.getFullYear() === now.getFullYear())
+                                thisMonthEarned += (od.amount || 50);
+                        }
+                    }
+                });
+                const earningsRow = document.getElementById("earningsRow");
+                earningsRow.innerHTML = `
+                    <div class="earnings-card"><div class="earn-val">&#8369;${totalEarned}</div><div class="earn-lbl">Total Earned</div></div>
+                    <div class="earnings-card"><div class="earn-val">&#8369;${thisMonthEarned}</div><div class="earn-lbl">This Month</div></div>
+                    <div class="earnings-card"><div class="earn-val">${paidOrders} / ${totalOrders}</div><div class="earn-lbl">Paid Orders</div></div>
+                `;
+
+                // Download events chart
                 const snap = await getDocs(collection(db, "download_events"));
                 const counts = {};
-                // Build last 7 days labels
                 for (let i = 6; i >= 0; i--) {
                     const d = new Date(); d.setDate(d.getDate() - i);
                     counts[d.toLocaleDateString('en-PH', {month:'short', day:'numeric'})] = { demo:0, full:0 };
@@ -1256,11 +1369,11 @@ service cloud.firestore {
                     const d   = new Date(ev.timestamp.seconds * 1000);
                     const lbl = d.toLocaleDateString('en-PH', {month:'short', day:'numeric'});
                     if (counts[lbl]) {
-                        if (ev.type === 'demo')       counts[lbl].demo++;
+                        if (ev.type === 'demo')            counts[lbl].demo++;
                         else if (ev.type === 'full_order') counts[lbl].full++;
                     }
                 });
-                const labels = Object.keys(counts);
+                const labels   = Object.keys(counts);
                 const demoData = labels.map(l => counts[l].demo);
                 const fullData = labels.map(l => counts[l].full);
                 const ctx = document.getElementById('analyticsChart').getContext('2d');
@@ -1270,8 +1383,8 @@ service cloud.firestore {
                     data: {
                         labels,
                         datasets: [
-                            { label: 'Demo Downloads', data: demoData,  backgroundColor: 'rgba(0,201,122,0.6)', borderColor: 'rgba(0,201,122,1)', borderWidth:1 },
-                            { label: 'Full Orders',    data: fullData,  backgroundColor: 'rgba(255,208,64,0.6)', borderColor: 'rgba(255,208,64,1)', borderWidth:1 }
+                            { label: 'Demo Downloads', data: demoData, backgroundColor: 'rgba(0,201,122,0.6)', borderColor: 'rgba(0,201,122,1)', borderWidth:1 },
+                            { label: 'Full Game Orders', data: fullData, backgroundColor: 'rgba(255,208,64,0.6)', borderColor: 'rgba(255,208,64,1)', borderWidth:1 }
                         ]
                     },
                     options: {
