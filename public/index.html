@@ -410,6 +410,81 @@
         /* â”€â”€ Divider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .divider { height: 1px; background: var(--border); margin: 4rem 0; }
 
+        /* ── Bug Report ──────────────────────────────────────────────────────── */
+        .bug-report-section {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            margin: 4rem auto;
+            max-width: 700px;
+        }
+        .bug-report-section h2 { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+        .bug-report-section > p { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.8rem; }
+        .bug-report-section textarea {
+            width: 100%;
+            padding: 0.65rem 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.92rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 90px;
+        }
+        .bug-report-section textarea:focus { outline: none; border-color: var(--accent); background: rgba(0,212,255,0.06); }
+        /* ── Admin Bug List ──────────────────────────────────────────────────── */
+        .admin-divider { height: 1px; background: rgba(255,120,0,0.15); margin: 1.5rem 0; }
+        .admin-bugs-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .admin-bugs-header h3 { color: #ff9a00; font-size: 1rem; font-weight: 700; }
+        .bug-refresh-btn {
+            padding: 0.3rem 0.8rem;
+            background: transparent;
+            border: 1px solid rgba(255,120,0,0.4);
+            color: #ff9a00;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            transition: all 0.2s;
+        }
+        .bug-refresh-btn:hover { background: rgba(255,120,0,0.08); }
+        .bug-list { display: flex; flex-direction: column; gap: 0.75rem; text-align: left; max-height: 480px; overflow-y: auto; }
+        .bug-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+        }
+        .bug-item.resolved { opacity: 0.45; }
+        .bug-item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem; }
+        .bug-item-title { font-size: 0.92rem; font-weight: 700; color: #fff; }
+        .bug-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .bug-badge.new      { background: rgba(0,212,255,0.15); color: var(--accent); border: 1px solid rgba(0,212,255,0.3); }
+        .bug-badge.resolved { background: rgba(0,201,122,0.12); color: var(--accent-green); border: 1px solid rgba(0,201,122,0.3); }
+        .bug-item-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }
+        .bug-item-desc { font-size: 0.85rem; color: #ccc; white-space: pre-wrap; word-break: break-word; }
+        .bug-resolve-btn {
+            margin-top: 0.6rem;
+            padding: 0.25rem 0.7rem;
+            background: transparent;
+            border: 1px solid rgba(0,201,122,0.35);
+            color: var(--accent-green);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+        .bug-resolve-btn:hover { background: rgba(0,201,122,0.08); }
+        .bug-empty { color: var(--muted); font-size: 0.88rem; padding: 1rem 0; text-align: center; }
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .auth-section { grid-template-columns: 1fr; }
@@ -647,8 +722,21 @@ service cloud.firestore {
         request.auth.token.email == 'dodoy.jericho@gmail.com'
       );
     }
+    match /bug_reports/{reportId} {
+      allow create: if request.auth != null;
+      allow read, update: if request.auth != null &&
+        request.auth.token.email == 'dodoy.jericho@gmail.com';
+    }
   }
 }</code>
+            </div>
+            <div class="admin-divider"></div>
+            <div class="admin-bugs-header">
+                <h3>&#128027; Bug Reports</h3>
+                <button class="bug-refresh-btn" id="bugRefreshBtn">&#8635; Refresh</button>
+            </div>
+            <div class="bug-list" id="bugList">
+                <div class="bug-empty">Loading bug reports...</div>
             </div>
         </section>
 
@@ -703,6 +791,27 @@ service cloud.firestore {
             </div>
             <div class="mp-note">Both players must be on the same Radmin VPN network. Standard LAN play is also supported if you're on the same WiFi.</div>
         </section>
+
+        <!-- ── Report a Bug ──────────────────────────────────────────────────── -->
+        <section class="bug-report-section hidden" id="bugReportSection">
+            <h2>&#128027; Report a Bug</h2>
+            <p>Found something broken? Let us know and we'll fix it before the defense.</p>
+            <div id="bugSubmitError" class="error-msg hidden"></div>
+            <div id="bugSubmitSuccess" class="success-msg hidden">Bug report submitted. Thank you!</div>
+            <form id="bugReportForm">
+                <div class="form-group">
+                    <label>Short Title</label>
+                    <input type="text" id="bugTitle" placeholder="e.g. Game crashes on Chapter 2 load" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="bugDesc" placeholder="Describe what happened, what you expected, and how to reproduce it..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Submit Bug Report</button>
+                </div>
+            </form>
+        </section>
     </main>
 
     <footer>
@@ -727,7 +836,8 @@ service cloud.firestore {
                  sendEmailVerification, updateProfile, onAuthStateChanged, signOut,
                  sendPasswordResetEmail
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getFirestore, collection, getCountFromServer, doc, getDoc
+        import { getFirestore, collection, getCountFromServer, doc, getDoc,
+                 addDoc, getDocs, orderBy, query, serverTimestamp, updateDoc
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const app  = initializeApp(firebaseConfig);
@@ -750,15 +860,18 @@ service cloud.firestore {
                 userStatus.textContent = user.displayName || user.email;
                 logoutBtn.classList.remove("hidden");
                 document.getElementById("playerProfile").classList.remove("hidden");
+                document.getElementById("bugReportSection").classList.remove("hidden");
                 loadUserProfile(user);
                 if (ADMIN_EMAILS.includes(user.email)) {
                     adminPanel.classList.remove("hidden");
                     loadUserCount();
+                    loadBugReports();
                 }
             } else {
                 authSection.classList.remove("hidden");
                 adminPanel.classList.add("hidden");
                 document.getElementById("playerProfile").classList.add("hidden");
+                document.getElementById("bugReportSection").classList.add("hidden");
                 userStatus.textContent = "Not signed in";
                 logoutBtn.classList.add("hidden");
             }
@@ -855,10 +968,90 @@ service cloud.firestore {
                 const snapshot = await getCountFromServer(collection(db, "users"));
                 document.getElementById("userCount").textContent = snapshot.data().count;
             } catch (err) {
-                document.getElementById("userCount").textContent = "â€”";
+                document.getElementById("userCount").textContent = "&mdash;";
                 document.getElementById("adminRulesNote").classList.remove("hidden");
             }
         }
+
+        // ── Bug Report: submit ───────────────────────────────────────────────
+        document.getElementById("bugReportForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const user        = auth.currentUser;
+            const title       = document.getElementById("bugTitle").value.trim();
+            const description = document.getElementById("bugDesc").value.trim();
+            const errEl       = document.getElementById("bugSubmitError");
+            const okEl        = document.getElementById("bugSubmitSuccess");
+            errEl.classList.add("hidden");
+            okEl.classList.add("hidden");
+            if (!user) return;
+            try {
+                await addDoc(collection(db, "bug_reports"), {
+                    title,
+                    description,
+                    reporter_uid:  user.uid,
+                    reporter_name: user.displayName || user.email,
+                    timestamp:     serverTimestamp(),
+                    status:        "new"
+                });
+                okEl.classList.remove("hidden");
+                document.getElementById("bugReportForm").reset();
+            } catch (err) {
+                errEl.textContent = "Failed to submit: " + err.message;
+                errEl.classList.remove("hidden");
+            }
+        });
+
+        // ── Bug Reports: admin load ──────────────────────────────────────────
+        async function loadBugReports() {
+            const listEl = document.getElementById("bugList");
+            listEl.innerHTML = '<div class="bug-empty">Loading...</div>';
+            try {
+                const q        = query(collection(db, "bug_reports"), orderBy("timestamp", "desc"));
+                const snapshot = await getDocs(q);
+                if (snapshot.empty) {
+                    listEl.innerHTML = '<div class="bug-empty">No bug reports yet.</div>';
+                    return;
+                }
+                listEl.innerHTML = "";
+                snapshot.forEach((docSnap) => {
+                    const d    = docSnap.data();
+                    const date = d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleString() : "—";
+                    const item = document.createElement("div");
+                    item.className = "bug-item" + (d.status === "resolved" ? " resolved" : "");
+                    item.innerHTML = `
+                        <div class="bug-item-header">
+                            <span class="bug-item-title">${escHtml(d.title)}</span>
+                            <span class="bug-badge ${d.status === "resolved" ? "resolved" : "new"}">${d.status === "resolved" ? "Resolved" : "New"}</span>
+                        </div>
+                        <div class="bug-item-meta">By ${escHtml(d.reporter_name)} &middot; ${date}</div>
+                        <div class="bug-item-desc">${escHtml(d.description)}</div>
+                        ${d.status !== "resolved" ? `<button class="bug-resolve-btn" data-id="${docSnap.id}">&#10003; Mark Resolved</button>` : ""}
+                    `;
+                    listEl.appendChild(item);
+                });
+                // Bind resolve buttons
+                listEl.querySelectorAll(".bug-resolve-btn").forEach(btn => {
+                    btn.addEventListener("click", async () => {
+                        btn.disabled = true;
+                        btn.textContent = "Saving...";
+                        try {
+                            await updateDoc(doc(db, "bug_reports", btn.dataset.id), { status: "resolved" });
+                            loadBugReports();
+                        } catch (err) {
+                            btn.textContent = "Error";
+                        }
+                    });
+                });
+            } catch (err) {
+                listEl.innerHTML = `<div class="bug-empty">Could not load reports: ${err.message}</div>`;
+            }
+        }
+
+        function escHtml(str) {
+            return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+        }
+
+        document.getElementById("bugRefreshBtn").addEventListener("click", loadBugReports);
     </script>
 </body>
 </html>
