@@ -1277,6 +1277,16 @@ service cloud.firestore {
         });
 
         // ── Order status checker ──────────────────────────────────────────
+        // ── Record a download click in Firestore ─────────────────────────
+        window.recordDownload = async function(email) {
+            try {
+                await addDoc(collection(db, "download_records"), {
+                    email: email.toLowerCase(),
+                    timestamp: serverTimestamp()
+                });
+            } catch(e) { /* non-critical — link still opens */ }
+        };
+
         window.checkOrderStatus = async function() {
             const email  = document.getElementById("statusEmail").value.trim().toLowerCase();
             const result = document.getElementById("statusResult");
@@ -1300,8 +1310,19 @@ service cloud.firestore {
                 });
                 const latest = docs[0];
                 if (latest.status === "paid") {
+                    // ── Check for previous downloads ──────────────────────────
+                    const dlQ    = query(collection(db, "download_records"), where("email", "==", email));
+                    const dlSnap = await getDocs(dlQ);
+                    let dlWarning = "";
+                    if (!dlSnap.empty) {
+                        // Find the earliest download record
+                        const dlDocs = dlSnap.docs.map(d => d.data()).sort((a,b) => (a.timestamp?.seconds||0)-(b.timestamp?.seconds||0));
+                        const firstDl = dlDocs[0];
+                        const dlDate  = firstDl.timestamp ? new Date(firstDl.timestamp.seconds*1000).toLocaleString("en-PH") : "a previous session";
+                        dlWarning = `<div style="margin:6px 0 8px; padding:6px 10px; background:rgba(255,200,0,0.12); border:1px solid rgba(255,200,0,0.35); border-radius:6px; font-size:0.8rem; color:#ffd040;">&#9888; You already downloaded this on <strong>${escHtml(dlDate)}</strong>. Re-downloading counts as the same license — please do not share the file.</div>`;
+                    }
                     result.className = "paid";
-                    result.innerHTML = `&#127881; <strong>Payment verified!</strong> Your download is ready:<br><a href="https://drive.google.com/uc?export=download&id=1yfNByZe590DB2iA06cJpev8qYthfTtM-" target="_blank" rel="noopener" style="color:var(--accent-green); font-weight:700; font-size:1rem;">&#11015; Download Full Game</a>`;
+                    result.innerHTML = `&#127881; <strong>Payment verified!</strong> Your download is ready:<br>${dlWarning}<a href="https://drive.google.com/uc?export=download&id=1yfNByZe590DB2iA06cJpev8qYthfTtM-" target="_blank" rel="noopener" onclick="recordDownload('${escHtml(email)}')" style="color:var(--accent-green); font-weight:700; font-size:1rem;">&#11015; Download Full Game</a>`;
                 } else {
                     result.className = "pending";
                     result.innerHTML = `&#9203; <strong>Payment pending verification</strong><br>Ref submitted: <strong>${escHtml(latest.ref_number)}</strong><br><span style="font-size:0.8rem; color:#bbb;">We check GCash manually — usually within a few minutes. Refresh this page and check again, or email <a href="mailto:dodoy.jericho@gmail.com" style="color:var(--accent);">dodoy.jericho@gmail.com</a> if it takes too long.</span>`;
@@ -1342,7 +1363,7 @@ service cloud.firestore {
                         </div>
                         <div class="order-item-meta">&#8369;${d.amount || 50} PHP &middot; ${date}</div>
                         <div class="order-item-ref">GCash Ref: <strong>${escHtml(d.ref_number)}</strong></div>
-                        ${d.status !== 'paid' ? `<button class="order-mark-paid" data-id="${docSnap.id}">&#10003; Mark as Paid &rarr; Send Download</button>` : '<span style="font-size:0.78rem;color:var(--accent-green);">&#11015; Download link sent via status checker</span>'}
+                        ${d.status !== 'paid' ? `<button class="order-mark-paid" data-id="${docSnap.id}">&#10003; Mark as Paid &rarr; Send Download</button>` : `<span style="font-size:0.78rem;color:var(--accent-green);">&#11015; Download link sent via status checker</span><span id="dlcount-${docSnap.id}" style="font-size:0.75rem;color:#ffd040;margin-left:8px;">Loading download count...</span>`}
                     `;
                     listEl.appendChild(item);
                 });
@@ -1354,6 +1375,19 @@ service cloud.firestore {
                             loadOrders();
                         } catch(e) { btn.disabled = false; btn.textContent = "Error: " + e.message; }
                     });
+                });
+                // ── Load download counts for paid orders ──────────────────
+                docs.forEach(async (docSnap) => {
+                    const d = docSnap.data();
+                    if (d.status !== "paid") return;
+                    const countEl = document.getElementById("dlcount-" + docSnap.id);
+                    if (!countEl) return;
+                    try {
+                        const dlQ    = query(collection(db, "download_records"), where("email", "==", d.email));
+                        const dlSnap = await getDocs(dlQ);
+                        const cnt    = dlSnap.size;
+                        countEl.textContent = cnt === 0 ? "(not yet downloaded)" : `(downloaded ${cnt}x)`;
+                    } catch(e) { countEl.textContent = ""; }
                 });
             } catch(err) {
                 listEl.innerHTML = `<div class="orders-empty">Could not load orders: ${err.message}</div>`;
