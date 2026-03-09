@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beyond The Horizon — Survival Adventure Game</title>
+    <title>Beyond The Horizon â€” Survival Adventure Game</title>
     <style>
         :root {
             --accent: #00d4ff;
@@ -19,11 +19,15 @@
         body {
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg);
+            background-image: 
+                linear-gradient(180deg, rgba(0,100,150,0.04) 0%, rgba(0,150,200,0.06) 50%, transparent 100%),
+                radial-gradient(ellipse at 50% 0%, rgba(0,200,255,0.08) 0%, transparent 50%);
+            background-attachment: fixed;
             color: var(--text);
             line-height: 1.6;
         }
 
-        /* ── Header ──────────────────────────────────────────────── */
+        /* â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         header {
             background: rgba(0,0,0,0.75);
             border-bottom: 1px solid var(--border);
@@ -62,10 +66,10 @@
         }
         .logout-btn:hover { background: rgba(231,76,60,0.12); }
 
-        /* ── Layout ──────────────────────────────────────────────── */
+        /* â”€â”€ Layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         main { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
-        /* ── Hero ────────────────────────────────────────────────── */
+        /* â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .hero { text-align: center; padding: 5rem 0 4rem; }
         .hero-eyebrow {
             display: inline-block;
@@ -78,6 +82,22 @@
             border-radius: 20px;
             margin-bottom: 1.4rem;
         }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:rgba(15,17,23,0);stop-opacity:0" /><stop offset="50%" style="stop-color:rgba(0,100,150,0.04);stop-opacity:0.04" /><stop offset="100%" style="stop-color:rgba(0,150,200,0.08);stop-opacity:0.08" /></linearGradient></defs><rect width="1200" height="600" fill="url(%23oceanGrad)"/><path d="M0,300 Q300,280 600,300 T1200,300" stroke="rgba(0,200,255,0.03)" stroke-width="2" fill="none" opacity="0.6"/><path d="M0,350 Q300,330 600,350 T1200,350" stroke="rgba(0,212,255,0.02)" stroke-width="1.5" fill="none" opacity="0.4"/></svg>') repeat;
+            background-attachment: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+        body { position: relative; }
+        main { position: relative; z-index: 1; }
+        header { position: relative; z-index: 101; }
+        footer { position: relative; z-index: 1; }
         .hero h1 {
             font-size: 3.2rem;
             font-weight: 800;
@@ -113,7 +133,7 @@
         }
         .btn-secondary:hover { background: rgba(0,212,255,0.07); border-color: var(--accent); }
 
-        /* ── Section headings ────────────────────────────────────── */
+        /* â”€â”€ Section headings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .section-heading {
             text-align: center;
             margin-bottom: 2.5rem;
@@ -121,7 +141,7 @@
         .section-heading h2 { font-size: 1.9rem; color: #fff; margin-bottom: 0.4rem; }
         .section-heading p  { color: var(--muted); font-size: 0.95rem; }
 
-        /* ── Screenshots ─────────────────────────────────────────── */
+        /* â”€â”€ Screenshots â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .screenshots-section { margin: 4rem 0; }
         .screenshots-grid {
             display: grid;
@@ -157,7 +177,7 @@
         }
         .screenshot-slot .slot-placeholder svg { width: 36px; height: 36px; }
 
-        /* ── Features ────────────────────────────────────────────── */
+        /* â”€â”€ Features â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -176,7 +196,7 @@
         .feature-card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
         .feature-card p  { font-size: 0.88rem; color: var(--muted); }
 
-        /* ── Chapters ────────────────────────────────────────────── */
+        /* â”€â”€ Chapters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .chapters-section { margin: 4rem 0; }
         .chapters-grid {
             display: grid;
@@ -219,7 +239,7 @@
             z-index: 1;
         }
 
-        /* ── Player Profile ───────────────────────────────────────── */
+        /* â”€â”€ Player Profile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .player-profile {
             background: var(--bg2);
             border: 1px solid var(--border);
@@ -244,7 +264,7 @@
         .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.06em; }
         .profile-hint { font-size: 0.78rem; color: #444; margin-top: 1.5rem; }
 
-        /* ── Auth ────────────────────────────────────────────────── */
+        /* â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .auth-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -293,7 +313,7 @@
         .error-msg   { background: rgba(211,47,47,0.15); color: #ff7070; border: 1px solid rgba(211,47,47,0.4); }
         .success-msg { background: rgba(0,201,122,0.12); color: var(--accent-green); border: 1px solid rgba(0,201,122,0.35); }
 
-        /* ── Admin Panel ─────────────────────────────────────────── */
+        /* â”€â”€ Admin Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .admin-panel {
             background: var(--bg2);
             border: 1px solid rgba(255,120,0,0.3);
@@ -327,7 +347,7 @@
             white-space: pre;
         }
 
-        /* ── Download ────────────────────────────────────────────── */
+        /* â”€â”€ Download â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .download-section {
             margin: 4rem 0;
             padding: 3rem 2rem;
@@ -349,7 +369,7 @@
         .download-card p  { color: var(--muted); font-size: 0.82rem; margin-bottom: 1.2rem; }
         .download-card .coming-soon { font-size: 0.75rem; margin-top: 0.6rem; color: #555; }
 
-        /* ── Multiplayer ─────────────────────────────────────────── */
+        /* â”€â”€ Multiplayer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .multiplayer-section { margin: 4rem 0; }
         .mp-steps {
             display: grid;
@@ -377,7 +397,7 @@
             text-align: center;
         }
 
-        /* ── Footer ─────────────────────────────────────────────── */
+        /* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         footer {
             text-align: center;
             padding: 2.5rem 2rem;
@@ -387,7 +407,7 @@
             font-size: 0.85rem;
         }
 
-        /* ── Divider ─────────────────────────────────────────────── */
+        /* â”€â”€ Divider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
         .divider { height: 1px; background: var(--border); margin: 4rem 0; }
 
         @media (max-width: 768px) {
@@ -416,11 +436,11 @@
     </header>
 
     <main>
-        <!-- ── Hero ──────────────────────────────────────────────── -->
+        <!-- â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="hero">
-            <div class="hero-eyebrow">Thesis Game Project · Godot 4.5</div>
+            <div class="hero-eyebrow">Thesis Game Project Â· Godot 4.5</div>
             <h1>Survive. Explore.<br>Find Your Way Home.</h1>
-            <p>A 2-player cooperative survival adventure across four unique environments. Craft tools, complete quests, and signal for rescue before it's too late.</p>
+            <p>A survival adventure across four unique environments. Craft tools, complete quests, and signal for rescue before it's too late.</p>
             <div class="btn-group">
                 <a href="#download" class="btn btn-primary">Download Free Demo</a>
                 <a href="https://beyond-the-horizon-game.itch.io/beyond-the-horizon" class="btn btn-secondary" target="_blank">Full Version on itch.io</a>
@@ -428,7 +448,7 @@
             </div>
         </section>
 
-        <!-- ── Screenshots ────────────────────────────────────────── -->
+        <!-- â”€â”€ Screenshots â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="screenshots-section" id="screenshots">
             <div class="section-heading">
                 <h2>Game Screenshots</h2>
@@ -458,41 +478,41 @@
 
         <div class="divider"></div>
 
-        <!-- ── Features ───────────────────────────────────────────── -->
+        <!-- â”€â”€ Features â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="features" id="features">
             <div class="feature-card">
-                <div class="fc-icon">🏝️</div>
+                <div class="fc-icon">ðŸï¸</div>
                 <h3>Open World Exploration</h3>
                 <p>Discover a vast island with diverse biomes, hidden resources, and secrets waiting to be uncovered.</p>
             </div>
             <div class="feature-card">
-                <div class="fc-icon">🔨</div>
+                <div class="fc-icon">ðŸ”¨</div>
                 <h3>Crafting & Survival</h3>
                 <p>Gather materials, craft tools, cook food, and manage hunger, thirst, and weight to stay alive.</p>
             </div>
             <div class="feature-card">
-                <div class="fc-icon">⚔️</div>
+                <div class="fc-icon">âš”ï¸</div>
                 <h3>Wildlife & Combat</h3>
                 <p>Face predatory animals across every map. Craft weapons and learn when to fight and when to flee.</p>
             </div>
             <div class="feature-card">
-                <div class="fc-icon">👥</div>
+                <div class="fc-icon">ðŸ‘¥</div>
                 <h3>2-Player Co-op</h3>
                 <p>Team up with a friend online using Radmin VPN. Share quests, resources, and survive together.</p>
             </div>
             <div class="feature-card">
-                <div class="fc-icon">📋</div>
+                <div class="fc-icon">ðŸ“‹</div>
                 <h3>Quest System</h3>
-                <p>Follow a structured quest chain in each chapter — from gathering firewood to signalling a rescue helicopter.</p>
+                <p>Follow a structured quest chain in each chapter â€” from gathering firewood to signalling a rescue helicopter.</p>
             </div>
             <div class="feature-card">
-                <div class="fc-icon">🌙</div>
+                <div class="fc-icon">ðŸŒ™</div>
                 <h3>Dynamic Day/Night Cycle</h3>
                 <p>A real-time day/night system that changes lighting, animal behaviour, and survival difficulty.</p>
             </div>
         </section>
 
-        <!-- ── Chapters ────────────────────────────────────────────── -->
+        <!-- â”€â”€ Chapters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="chapters-section" id="chapters">
             <div class="section-heading">
                 <h2>Four Chapters. Four Environments.</h2>
@@ -500,30 +520,30 @@
             </div>
             <div class="chapters-grid">
                 <div class="chapter-card">
-                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0d4a1a, #1a7a2a, #3aa84a);">🌴</div>
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0d4a1a, #1a7a2a, #3aa84a);">ðŸŒ´</div>
                     <div class="chapter-body">
-                        <h3>Chapter 1 — Signal for Rescue</h3>
+                        <h3>Chapter 1 â€” Signal for Rescue</h3>
                         <p>Stranded on a tropical island. Gather resources, boil water, craft tools, and light signal flares before the volcano erupts.</p>
                     </div>
                 </div>
                 <div class="chapter-card">
-                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0a2a4a, #0d4a7a, #1a7aaa);">🌊</div>
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0a2a4a, #0d4a7a, #1a7aaa);">ðŸŒŠ</div>
                     <div class="chapter-body">
-                        <h3>Chapter 2 — The Shelter</h3>
+                        <h3>Chapter 2 â€” The Shelter</h3>
                         <p>A massive tsunami is approaching. Build a secure shelter, stock supplies, and survive the rising tide.</p>
                     </div>
                 </div>
                 <div class="chapter-card">
-                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #3a1a00, #7a3a00, #c46200);">🏜️</div>
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #3a1a00, #7a3a00, #c46200);">ðŸœï¸</div>
                     <div class="chapter-body">
-                        <h3>Chapter 3 — Desert Crossing</h3>
+                        <h3>Chapter 3 â€” Desert Crossing</h3>
                         <p>Scorching desert terrain. Navigate shifting sands, avoid sandstorms, and find the radio tower to call for help.</p>
                     </div>
                 </div>
                 <div class="chapter-card">
-                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #1a0a3a, #3a1a5a, #6a2a8a);">🚁</div>
+                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #1a0a3a, #3a1a5a, #6a2a8a);">ðŸš</div>
                     <div class="chapter-body">
-                        <h3>Chapter 4 — Final Extraction</h3>
+                        <h3>Chapter 4 â€” Final Extraction</h3>
                         <p>The islands are sinking. Locate the helicopter landing zone and signal for extraction before time runs out.</p>
                     </div>
                 </div>
@@ -532,7 +552,7 @@
 
         <div class="divider"></div>
 
-        <!-- ── Auth ────────────────────────────────────────────────── -->
+        <!-- â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="auth-section" id="authSection">
             <div class="auth-card">
                 <h2>Sign In</h2>
@@ -580,38 +600,38 @@
             </div>
         </section>
 
-        <!-- ── Player Profile ─────────────────────────────────────── -->
+        <!-- â”€â”€ Player Profile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="player-profile hidden" id="playerProfile">
             <h2>My Profile</h2>
             <p>Progress syncs automatically each time you play while signed in.</p>
             <div class="profile-stats">
                 <div class="stat-card">
-                    <div class="stat-value" id="profileChapters">—</div>
+                    <div class="stat-value" id="profileChapters">â€”</div>
                     <div class="stat-label">Chapters Unlocked</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="profileKills">—</div>
+                    <div class="stat-value" id="profileKills">â€”</div>
                     <div class="stat-label">Animals Hunted</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="profileFish">—</div>
+                    <div class="stat-value" id="profileFish">â€”</div>
                     <div class="stat-label">Fish Caught</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="profileEndless">—</div>
+                    <div class="stat-value" id="profileEndless">â€”</div>
                     <div class="stat-label">Endless Mode</div>
                 </div>
             </div>
             <p class="profile-hint">Play the game and progress will appear here automatically.</p>
         </section>
 
-        <!-- ── Admin Panel ────────────────────────────────────────── -->
+        <!-- â”€â”€ Admin Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="admin-panel hidden" id="adminPanel">
             <h2>Admin Panel</h2>
             <p>Total Registered Users</p>
             <div class="user-count" id="userCount">Loading...</div>
             <div class="admin-rules-note hidden" id="adminRulesNote">
-                The user count requires updated Firestore security rules. In Firebase Console → Firestore → Rules, replace your current rules with:
+                The user count requires updated Firestore security rules. In Firebase Console â†’ Firestore â†’ Rules, replace your current rules with:
                 <code>rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -626,7 +646,7 @@ service cloud.firestore {
             </div>
         </section>
 
-        <!-- ── Download ────────────────────────────────────────────── -->
+        <!-- â”€â”€ Download â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="download-section" id="download">
             <div class="section-heading">
                 <h2>Download the Game</h2>
@@ -635,9 +655,9 @@ service cloud.firestore {
             <div class="download-cards">
                 <div class="download-card">
                     <h3>Free Demo</h3>
-                    <p>Chapter 1 — Stranded on a tropical island. Multiplayer co-op included.</p>
+                    <p>Chapter 1 â€” Stranded on a tropical island. Multiplayer co-op included.</p>
                     <a href="#" class="btn btn-primary" id="demoDownloadBtn">Download Demo</a>
-                    <p class="coming-soon">Coming soon — check back here</p>
+                    <p class="coming-soon">Coming soon â€” check back here</p>
                 </div>
                 <div class="download-card">
                     <h3>Full Version</h3>
@@ -647,7 +667,7 @@ service cloud.firestore {
             </div>
         </section>
 
-        <!-- ── Multiplayer ─────────────────────────────────────────── -->
+        <!-- â”€â”€ Multiplayer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
         <section class="multiplayer-section" id="multiplayer">
             <div class="section-heading">
                 <h2>Playing With a Friend</h2>
@@ -667,12 +687,12 @@ service cloud.firestore {
                 <div class="mp-step">
                     <div class="mp-step-num">03</div>
                     <h4>Host the Session</h4>
-                    <p>The host opens the game, goes to Multiplayer → Host Game. Your Radmin VPN IP (e.g. <code style="color:var(--accent-green);">26.x.x.x</code>) is shown in the lobby. Share it with your friend.</p>
+                    <p>The host opens the game, goes to Multiplayer â†’ Host Game. Your Radmin VPN IP (e.g. <code style="color:var(--accent-green);">26.x.x.x</code>) is shown in the lobby. Share it with your friend.</p>
                 </div>
                 <div class="mp-step">
                     <div class="mp-step-num">04</div>
                     <h4>Join and Play</h4>
-                    <p>The second player goes to Multiplayer → Join Game, enters the host's Radmin VPN IP, and clicks Connect. Both players spawn on the map.</p>
+                    <p>The second player goes to Multiplayer â†’ Join Game, enters the host's Radmin VPN IP, and clicks Connect. Both players spawn on the map.</p>
                 </div>
             </div>
             <div class="mp-note">Both players must be on the same Radmin VPN network. Standard LAN play is also supported if you're on the same WiFi.</div>
@@ -829,902 +849,10 @@ service cloud.firestore {
                 const snapshot = await getCountFromServer(collection(db, "users"));
                 document.getElementById("userCount").textContent = snapshot.data().count;
             } catch (err) {
-                document.getElementById("userCount").textContent = "—";
+                document.getElementById("userCount").textContent = "â€”";
                 document.getElementById("adminRulesNote").classList.remove("hidden");
             }
         }
-    </script>
-</body>
-</html>
-
-
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #e0e0e0;
-            line-height: 1.6;
-        }
-
-        header {
-            background: rgba(0, 0, 0, 0.7);
-            border-bottom: 2px solid #00d4ff;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #00d4ff;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-        }
-
-        nav {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        nav a {
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #00d4ff;
-        }
-
-        .user-status {
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 212, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .logout-btn {
-            padding: 0.5rem 1rem;
-            background: #d32f2f;
-            border: none;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: #b71c1c;
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 4rem 0;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #00d4ff, #00ff88);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #b0b0b0;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #00d4ff, #00ff88);
-            color: #000;
-            font-weight: bold;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid #00d4ff;
-            color: #00d4ff;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 212, 255, 0.1);
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #00d4ff;
-            padding: 2rem;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            background: rgba(0, 212, 255, 0.1);
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-        }
-
-        .feature-card h3 {
-            color: #00d4ff;
-            margin-bottom: 1rem;
-        }
-
-        .chapters-section {
-            margin: 4rem 0;
-            text-align: center;
-        }
-
-        .chapters-section h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #00d4ff;
-        }
-
-        .chapters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .chapter-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid #00d4ff;
-            border-radius: 10px;
-            transition: all 0.3s;
-            cursor: pointer;
-            overflow: hidden;
-            padding-bottom: 1.2rem;
-        }
-
-        .chapter-card:hover {
-            background: rgba(0, 212, 255, 0.1);
-            transform: scale(1.04);
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
-        }
-
-        .chapter-card h3 {
-            color: #00ff88;
-            margin-bottom: 0.4rem;
-            padding: 0 1.2rem;
-        }
-
-        .chapter-card p {
-            font-size: 0.9rem;
-            color: #888;
-            padding: 0 1.2rem;
-        }
-
-        .chapter-map-preview {
-            height: 130px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chapter-map-preview::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 100%);
-        }
-
-        .chapter-locked-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0,0,0,0.7);
-            color: #aaa;
-            font-size: 1rem;
-            padding: 2px 7px;
-            border-radius: 4px;
-            z-index: 1;
-        }
-
-        /* Player profile section */
-        .player-profile {
-            background: rgba(0, 0, 0, 0.55);
-            border: 1px solid #00d4ff;
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 3rem auto;
-            max-width: 900px;
-            text-align: center;
-        }
-
-        .player-profile h2 {
-            color: #00d4ff;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .profile-stats {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .stat-card {
-            background: rgba(0, 212, 255, 0.07);
-            border: 1px solid rgba(0, 212, 255, 0.25);
-            border-radius: 8px;
-            padding: 1.4rem 2rem;
-            min-width: 140px;
-        }
-
-        .stat-icon { font-size: 2rem; margin-bottom: 0.4rem; }
-        .stat-value { font-size: 2rem; font-weight: bold; color: #00ff88; }
-        .stat-label { font-size: 0.82rem; color: #888; margin-top: 0.25rem; }
-        .profile-hint { font-size: 0.82rem; color: #555; margin-top: 1rem; }
-
-        .auth-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 4rem 0;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .auth-card {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #00d4ff;
-            padding: 2rem;
-            border-radius: 8px;
-        }
-
-        .auth-card h2 {
-            color: #00d4ff;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #00d4ff;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.7rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #00d4ff;
-            color: #e0e0e0;
-            border-radius: 4px;
-            font-size: 0.95rem;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            background: rgba(0, 212, 255, 0.15);
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
-        }
-
-        .form-group button {
-            width: 100%;
-            padding: 0.8rem;
-            background: linear-gradient(135deg, #00d4ff, #00ff88);
-            color: #000;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .form-group button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
-        }
-
-        .error-msg, .success-msg {
-            padding: 0.8rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .error-msg {
-            background: rgba(211, 47, 47, 0.2);
-            color: #ff6b6b;
-            border: 1px solid #d32f2f;
-        }
-
-        .success-msg {
-            background: rgba(0, 128, 0, 0.2);
-            color: #00ff88;
-            border: 1px solid #00aa00;
-        }
-
-        .admin-panel {
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #ff6b00;
-            padding: 2rem;
-            border-radius: 8px;
-            margin: 4rem 0;
-            text-align: center;
-        }
-
-        .admin-panel h2 {
-            color: #ff6b00;
-            margin-bottom: 1rem;
-        }
-
-        .admin-panel.hidden {
-            display: none;
-        }
-
-        .user-count {
-            font-size: 2rem;
-            color: #00d4ff;
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid #00d4ff;
-            margin-top: 4rem;
-            color: #888;
-        }
-
-        /* Download section */
-        .download-section {
-            text-align: center;
-            margin: 4rem 0;
-            padding: 3rem 2rem;
-            background: rgba(0, 255, 136, 0.04);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 12px;
-        }
-        .download-section h2 { color: #00ff88; font-size: 2rem; margin-bottom: 0.5rem; }
-        .download-section p  { color: #888; margin-bottom: 2rem; }
-        .download-cards {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-        }
-        .download-card {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid #00d4ff;
-            border-radius: 10px;
-            padding: 2rem;
-            min-width: 220px;
-            text-align: center;
-        }
-        .download-card h3 { color: #00d4ff; margin-bottom: 0.5rem; }
-        .download-card p  { color: #888; font-size: 0.85rem; margin-bottom: 1.2rem; }
-        .download-card .btn { display: inline-block; min-width: 160px; }
-
-        /* Multiplayer / Radmin section */
-        .multiplayer-section {
-            margin: 4rem 0;
-        }
-        .multiplayer-section h2 {
-            color: #00d4ff;
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-        .multiplayer-section > p {
-            text-align: center;
-            color: #888;
-            margin-bottom: 2rem;
-        }
-        .mp-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 1.5rem;
-        }
-        .mp-step {
-            background: rgba(0, 212, 255, 0.05);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-        }
-        .mp-step-num {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #00d4ff;
-            margin-bottom: 0.5rem;
-        }
-        .mp-step h4  { color: #e0e0e0; margin-bottom: 0.4rem; }
-        .mp-step p   { color: #888; font-size: 0.88rem; }
-        .mp-note {
-            margin-top: 1.5rem;
-            padding: 1rem 1.5rem;
-            background: rgba(255, 200, 0, 0.07);
-            border: 1px solid rgba(255, 200, 0, 0.25);
-            border-radius: 8px;
-            color: #ccc;
-            font-size: 0.88rem;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .auth-section {
-                grid-template-columns: 1fr;
-            }
-
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <div class="logo">🌍 Beyond The Horizon</div>
-            <nav>
-                <a href="#features">Features</a>
-                <a href="#chapters">Chapters</a>
-                <a href="#download">Download</a>
-                <a href="#multiplayer">Multiplayer</a>
-                <div class="user-status" id="userStatus">Not logged in</div>
-                <button class="logout-btn hidden" id="logoutBtn">Logout</button>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <section class="hero">
-            <h1>Survive. Explore. Thrive.</h1>
-            <p>An immersive multiplayer survival adventure across 4 unique maps.</p>
-            <div class="btn-group">
-                <a href="#download" class="btn btn-primary">⬇️ Download Free Demo</a>
-                <a href="https://beyond-the-horizon-game.itch.io/beyond-the-horizon" class="btn btn-secondary" target="_blank">🛒 Full Version on itch.io</a>
-                <a href="#multiplayer" class="btn btn-secondary">🤝 How to Play Together</a>
-            </div>
-        </section>
-
-        <section class="features" id="features">
-            <div class="feature-card">
-                <h3>🏝️ Explore</h3>
-                <p>Discover a vast island with diverse regions, resources, and secrets waiting to be uncovered.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🏗️ Craft & Build</h3>
-                <p>Gather resources, craft tools, and build shelters to survive on the island.</p>
-            </div>
-            <div class="feature-card">
-                <h3>⚔️ Combat</h3>
-                <p>Face wildlife threats and master combat skills to protect yourself.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🤝 Multiplayer</h3>
-                <p>Play with a friend in cooperative multiplayer mode and overcome challenges together.</p>
-            </div>
-            <div class="feature-card">
-                <h3>📖 Quests</h3>
-                <p>Complete engaging quests that guide your survival journey.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🌙 Dynamic World</h3>
-                <p>Experience a realistic day/night cycle that affects gameplay and atmosphere.</p>
-            </div>
-        </section>
-
-        <section class="chapters-section" id="chapters">
-            <h2>Chapters</h2>
-            <div class="chapters-grid">
-                <div class="chapter-card">
-                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0d4a1a, #1a7a2a, #3aa84a);">
-                        🌴
-                    </div>
-                    <h3>Chapter 1 — Signal for Rescue</h3>
-                    <p>Stranded on a tropical island. Gather resources, boil water, craft tools, and light signal flares before the volcano erupts.</p>
-                </div>
-                <div class="chapter-card">
-                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #0a2a4a, #0d4a7a, #1a7aaa);">
-                        🌊
-                    </div>
-                    <h3>Chapter 2 — The Shelter</h3>
-                    <p>A massive tsunami is coming. Build a secure shelter, stock supplies, and survive the rising tide in a race against time.</p>
-                </div>
-                <div class="chapter-card">
-                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #3a1a00, #7a3a00, #c46200);">
-                        🏜️
-                    </div>
-                    <h3>Chapter 3 — Desert Crossing</h3>
-                    <p>Scorching desert terrain. Navigate shifting sands, dodge sandstorms, and find the radio tower to call for help.</p>
-                </div>
-                <div class="chapter-card">
-                    <div class="chapter-map-preview" style="background: linear-gradient(135deg, #1a0a3a, #3a1a5a, #6a2a8a);">
-                        🚁
-                    </div>
-                    <h3>Chapter 4 — Final Map</h3>
-                    <p>The final frontier. Islands are sinking. Find the helicopter landing zone and signal for extraction before it's too late.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="auth-section" id="authSection">
-            <div class="auth-card">
-                <h2>Sign In</h2>
-                <div id="loginError" class="error-msg hidden"></div>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="loginEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit">Sign In</button>
-                    </div>
-                    <div style="text-align:center; margin-top: 0.5rem;">
-                        <button id="forgotPasswordBtn" style="background:none; border:none; color:#00d4ff; cursor:pointer; font-size:0.9rem; text-decoration:underline;">Forgot password?</button>
-                    </div>
-                    <div id="resetMsg" class="success-msg hidden"></div>
-                </form>
-            </div>
-
-            <div class="auth-card">
-                <h2>Create Account</h2>
-                <div id="signupError" class="error-msg hidden"></div>
-                <div id="signupSuccess" class="success-msg hidden">Account created! Check your email to verify.</div>
-                <form id="signupForm">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" id="signupUsername" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="signupEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="signupPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit">Create Account</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-
-        <section class="admin-panel hidden" id="adminPanel">
-            <h2>📊 Admin Panel</h2>
-            <p>Total Registered Users:</p>
-            <div class="user-count" id="userCount">Loading...</div>
-        </section>
-
-        <!-- DOWNLOAD SECTION -->
-        <section class="download-section" id="download">
-            <h2>⬇️ Download the Game</h2>
-            <p>Play Chapter 1 for free, or get the full 4-chapter experience.</p>
-            <div class="download-cards">
-                <div class="download-card">
-                    <h3>🆓 Free Demo</h3>
-                    <p>Chapter 1 — Stranded on a tropical island. Includes full multiplayer co-op mode.</p>
-                    <a href="#" class="btn btn-primary" id="demoDownloadBtn">Download Demo</a>
-                    <p style="font-size:0.78rem; margin-top:0.7rem; color:#555;">Coming soon — check back here</p>
-                </div>
-                <div class="download-card">
-                    <h3>💎 Full Version</h3>
-                    <p>All 4 chapters + Endless Mode. Cloud saves, multiplayer, and the complete story.</p>
-                    <a href="https://beyond-the-horizon-game.itch.io/beyond-the-horizon" class="btn btn-secondary" target="_blank">Get on itch.io</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- MULTIPLAYER / RADMIN VPN SECTION -->
-        <section class="multiplayer-section" id="multiplayer">
-            <h2>🤝 Play With a Friend</h2>
-            <p>Beyond The Horizon supports 2-player co-op. Here's how to connect with a friend online.</p>
-            <div class="mp-steps">
-                <div class="mp-step">
-                    <div class="mp-step-num">1</div>
-                    <h4>Install Radmin VPN</h4>
-                    <p>Both players download and install <strong>Radmin VPN</strong> (free) from <a href="https://www.radmin-vpn.com" target="_blank" style="color:#00d4ff;">radmin-vpn.com</a>. This creates a virtual private network so you can play like you're on the same WiFi.</p>
-                </div>
-                <div class="mp-step">
-                    <div class="mp-step-num">2</div>
-                    <h4>Create or Join a Network</h4>
-                    <p>One player clicks <em>Create Network</em> and sets a name + password. The other player clicks <em>Join Network</em> and enters those same credentials.</p>
-                </div>
-                <div class="mp-step">
-                    <div class="mp-step-num">3</div>
-                    <h4>Host the Game</h4>
-                    <p>The host opens the game → Main Menu → <em>Multiplayer</em> → <em>Host Game</em>. The Radmin VPN IP is shown (e.g. <code style="color:#00ff88;">26.x.x.x</code>). Share it with your friend.</p>
-                </div>
-                <div class="mp-step">
-                    <div class="mp-step-num">4</div>
-                    <h4>Join the Game</h4>
-                    <p>The second player opens the game → Main Menu → <em>Multiplayer</em> → <em>Join Game</em> → enters the host's Radmin VPN IP → click <em>Connect</em>. Both players spawn on the map — game begins!</p>
-                </div>
-            </div>
-            <div class="mp-note">⚠️ Both players must be on the <strong>same Radmin VPN network</strong> for this to work. Standard LAN play also works if you're on the same WiFi.</div>
-        </section>
-
-        <section class="player-profile hidden" id="playerProfile">
-            <h2>👤 My Profile</h2>
-            <div class="profile-stats">
-                <div class="stat-card">
-                    <div class="stat-icon">🔓</div>
-                    <div class="stat-value" id="profileChapters">—</div>
-                    <div class="stat-label">Chapters Unlocked</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🐾</div>
-                    <div class="stat-value" id="profileKills">—</div>
-                    <div class="stat-label">Animals Hunted</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🌍</div>
-                    <div class="stat-value" id="profileEndless">—</div>
-                    <div class="stat-label">Endless Mode</div>
-                </div>
-            </div>
-            <p class="profile-hint">Stats sync automatically each time you play while signed in</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Beyond The Horizon. A thesis project. All rights reserved.</p>
-    </footer>
-
-    <script type="module">
-        // ── PASTE YOUR FIREBASE CONFIG HERE ──────────────────────────────
-        // (same values as in firebase_manager.gd)
-        const firebaseConfig = {
-            apiKey: "AIzaSyCCIGt-DtlrozWvkGK-t_j5puWGmqs4tzo",
-            authDomain: "beyond-the-horizon-v1.firebaseapp.com",
-            projectId: "beyond-the-horizon-v1",
-            storageBucket: "beyond-the-horizon-v1.firebasestorage.app",
-            messagingSenderId: "850783533019",
-            appId: "1:850783533019:web:b20688ff4727647d95d9fe",
-            measurementId: "G-YXT2NVYLP4"
-        };
-        // ─────────────────────────────────────────────────────────────────
-
-        // Admin emails — only these see the admin panel
-        const ADMIN_EMAILS = ["dodoy.jericho@gmail.com"];
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-                 sendEmailVerification, updateProfile, onAuthStateChanged, signOut,
-                 sendPasswordResetEmail
-        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getFirestore, collection, getCountFromServer, doc, getDoc
-        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        // DOM elements
-        const authSection = document.getElementById("authSection");
-        const adminPanel = document.getElementById("adminPanel");
-        const userStatus = document.getElementById("userStatus");
-        const logoutBtn = document.getElementById("logoutBtn");
-        const loginForm = document.getElementById("loginForm");
-        const signupForm = document.getElementById("signupForm");
-        const loginError = document.getElementById("loginError");
-        const signupError = document.getElementById("signupError");
-        const signupSuccess = document.getElementById("signupSuccess");
-
-        // Handle auth state changes
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                // User is logged in
-                authSection.classList.add("hidden");
-                userStatus.textContent = `Logged in as ${user.displayName || user.email}`;
-                logoutBtn.classList.remove("hidden");
-
-                // Show profile stats
-                document.getElementById("playerProfile").classList.remove("hidden");
-                loadUserProfile(user);
-
-                // Check if user is admin
-                if (ADMIN_EMAILS.includes(user.email)) {
-                    adminPanel.classList.remove("hidden");
-                    loadUserCount();
-                }
-            } else {
-                // User is logged out
-                authSection.classList.remove("hidden");
-                adminPanel.classList.add("hidden");
-                document.getElementById("playerProfile").classList.add("hidden");
-                userStatus.textContent = "Not logged in";
-                logoutBtn.classList.add("hidden");
-            }
-        });
-
-        // Load user profile from Firestore
-        async function loadUserProfile(user) {
-            try {
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-                    const chapters = Array.isArray(data.unlocked_chapters) ? data.unlocked_chapters.length : 1;
-                    const kills = data.total_animals_killed || 0;
-                    const endless = data.endless_mode_unlocked ? "Unlocked" : "Locked";
-                    document.getElementById("profileChapters").textContent = `${chapters} / 5`;
-                    document.getElementById("profileKills").textContent = kills;
-                    document.getElementById("profileEndless").textContent = endless;
-                } else {
-                    document.getElementById("profileChapters").textContent = "1 / 5";
-                    document.getElementById("profileKills").textContent = "0";
-                    document.getElementById("profileEndless").textContent = "Locked";
-                }
-            } catch (error) {
-                console.error("Profile load error:", error);
-            }
-        }
-
-        // Login form
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const email = document.getElementById("loginEmail").value;
-            const password = document.getElementById("loginPassword").value;
-
-            try {
-                const userCred = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCred.user;
-
-                // Check if email is verified
-                await user.reload();
-                if (!user.emailVerified) {
-                    loginError.textContent = "Please verify your email before logging in.";
-                    loginError.classList.remove("hidden");
-                    await signOut(auth);
-                    return;
-                }
-
-                loginError.classList.add("hidden");
-                loginForm.reset();
-            } catch (error) {
-                loginError.textContent = error.message;
-                loginError.classList.remove("hidden");
-            }
-        });
-
-        // Signup form
-        signupForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const username = document.getElementById("signupUsername").value;
-            const email = document.getElementById("signupEmail").value;
-            const password = document.getElementById("signupPassword").value;
-
-            try {
-                const userCred = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCred.user;
-
-                // Set display name
-                await updateProfile(user, { displayName: username });
-
-                // Send verification email
-                await sendEmailVerification(user);
-
-                signupError.classList.add("hidden");
-                signupSuccess.classList.remove("hidden");
-                signupSuccess.textContent = `Account created! Check your email (${email}) to verify your account.`;
-                signupForm.reset();
-
-                // Auto logout after signup so they have to login
-                await signOut(auth);
-            } catch (error) {
-                signupError.textContent = error.message;
-                signupError.classList.remove("hidden");
-                signupSuccess.classList.add("hidden");
-            }
-        });
-
-        // Logout button
-        logoutBtn.addEventListener("click", async () => {
-            await signOut(auth);
-        });
-
-        // Forgot password
-        document.getElementById("forgotPasswordBtn").addEventListener("click", async () => {
-            const email = document.getElementById("loginEmail").value.trim();
-            const resetMsg = document.getElementById("resetMsg");
-            if (!email) {
-                loginError.textContent = "Enter your email above first, then click Forgot Password.";
-                loginError.classList.remove("hidden");
-                return;
-            }
-            try {
-                await sendPasswordResetEmail(auth, email);
-                resetMsg.textContent = `Password reset email sent to ${email}. Check your inbox.`;
-                resetMsg.classList.remove("hidden");
-                loginError.classList.add("hidden");
-            } catch (error) {
-                loginError.textContent = error.message;
-                loginError.classList.remove("hidden");
-            }
-        });
-
-        // Load user count for admin
-        async function loadUserCount() {
-            try {
-                const usersCollection = collection(db, "users");
-                const snapshot = await getCountFromServer(usersCollection);
-                document.getElementById("userCount").textContent = snapshot.data().count;
-            } catch (error) {
-                document.getElementById("userCount").textContent = "Error loading count";
-            }
-        }
-
     </script>
 </body>
 </html>
