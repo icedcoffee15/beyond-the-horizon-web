@@ -1229,9 +1229,34 @@ service cloud.firestore {
             const email  = document.getElementById("orderEmail").value.trim().toLowerCase();
             const ref    = document.getElementById("orderRef").value.trim();
             btn.disabled = true;
-            btn.textContent = "Submitting...";
+            btn.textContent = "Checking...";
             msgEl.className = ""; msgEl.style.display = "none";
             try {
+                // ── Duplicate check: already paid? Show download immediately ──
+                const existingQ    = query(collection(db, "orders"), where("email", "==", email));
+                const existingSnap = await getDocs(existingQ);
+                const alreadyPaid  = existingSnap.docs.find(d => d.data().status === "paid");
+                if (alreadyPaid) {
+                    msgEl.innerHTML = "&#127881; <strong>You already have a verified purchase!</strong> Get your download:";
+                    msgEl.className = "success";
+                    document.getElementById("statusEmail").value = email;
+                    btn.textContent = "Already Purchased";
+                    // Trigger status checker to show download link
+                    checkOrderStatus();
+                    return;
+                }
+                // ── Check for existing pending order (prevent duplicate submissions) ──
+                const alreadyPending = existingSnap.docs.find(d => d.data().status === "pending");
+                if (alreadyPending) {
+                    msgEl.innerHTML = "&#9203; You already submitted an order for this email. <strong>Check your status below</strong> — it may still be pending verification.";
+                    msgEl.className = "success";
+                    document.getElementById("statusEmail").value = email;
+                    btn.disabled = false;
+                    btn.textContent = "Already Submitted";
+                    return;
+                }
+                // ── New order ──
+                btn.textContent = "Submitting...";
                 await addDoc(collection(db, "orders"), {
                     email, ref_number: ref,
                     amount: 50, currency: "PHP",
@@ -1239,7 +1264,7 @@ service cloud.firestore {
                     timestamp: serverTimestamp()
                 });
                 await addDoc(collection(db, "download_events"), { type: "full_order", timestamp: serverTimestamp() });
-                msgEl.textContent = "\u23F3 Order submitted for: " + email + ". Use the status checker below to check when your download is ready.";
+                msgEl.textContent = "\u23F3 Order submitted for: " + email + ". We'll verify your GCash payment. Use the status checker below to check when your download is ready.";
                 msgEl.className = "success";
                 btn.textContent = "\u2713 Submitted";
                 document.getElementById("statusEmail").value = email;
