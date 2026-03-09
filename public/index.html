@@ -589,7 +589,7 @@
             <p>A survival adventure across four unique environments. Craft tools, complete quests, and signal for rescue before it's too late.</p>
             <div class="btn-group">
                 <a href="#download" class="btn btn-primary">&#11015; Download Free Demo</a>
-                <a href="https://jerichodoy.gumroad.com/l/uiexqq" target="_blank" rel="noopener" class="btn btn-secondary">&#128722; Buy Full Version &mdash; &#8369;50</a>
+                <a href="https://jerichodoy.gumroad.com/l/uiexqq" class="btn btn-secondary gumroad-button" onclick="trackDownload('full_purchase_click')">&#128722; Buy Full Version &mdash; &#8369;50</a>
                 <a href="#multiplayer" class="btn btn-secondary">&#127918; How to Play Co-op</a>
             </div>
         </section>
@@ -798,19 +798,24 @@ service cloud.firestore {
             </div>
             <!-- Analytics -->
             <div class="chart-container">
-                <h3>&#128202; Downloads &amp; Orders (Last 7 Days)</h3>
+                <h3>&#128202; Downloads &amp; Sales (Last 7 Days)</h3>
                 <div class="earnings-row" id="earningsRow"></div>
                 <canvas id="analyticsChart" height="100"></canvas>
             </div>
 
             <div class="admin-divider"></div>
 
-            <!-- Orders -->
+            <!-- Gumroad Sales link -->
             <div class="orders-header">
-                <h3>&#128179; GCash Orders</h3>
-                <button class="bug-refresh-btn" id="ordersRefreshBtn">&#8635; Refresh</button>
+                <h3>&#128722; Gumroad Sales</h3>
             </div>
-            <div id="ordersList"><div class="orders-empty">Loading orders...</div></div>
+            <div style="padding:0.8rem 0 0.5rem; color:var(--muted); font-size:0.88rem;">
+                Full purchase data (buyer emails, revenue, payout status) is in your Gumroad merchant dashboard.<br>
+                <a href="https://app.gumroad.com/dashboard" target="_blank" rel="noopener" style="color:var(--accent); font-weight:600;">&#8599; Open Gumroad Dashboard</a>
+                &nbsp;&mdash;&nbsp;
+                <a href="https://app.gumroad.com/sales" target="_blank" rel="noopener" style="color:var(--accent);">&#8599; View All Sales</a>
+            </div>
+            <div style="padding:0.4rem 0 1rem; font-size:0.82rem; color:var(--muted);">Purchase clicks tracked below are recorded when a user clicks Buy Now on this site.</div>
 
             <div class="admin-divider"></div>
             <div class="admin-bugs-header">
@@ -841,7 +846,7 @@ service cloud.firestore {
                     <div class="badge-paid">&#8369;50</div>
                     <h3>Full Version &mdash; All 4 Chapters</h3>
                     <p>Chapters 1&ndash;4 + Endless Mode. Multiplayer co-op, cloud saves, full story.</p>
-                    <a href="https://jerichodoy.gumroad.com/l/uiexqq" target="_blank" rel="noopener" class="btn btn-secondary" style="width:100%; display:block; text-align:center; box-sizing:border-box;">
+                    <a href="https://jerichodoy.gumroad.com/l/uiexqq" class="btn btn-secondary gumroad-button" style="width:100%; display:block; text-align:center; box-sizing:border-box;" onclick="trackDownload('full_purchase_click')">
                         &#128722; Buy Now &mdash; &#8369;50
                     </a>
                     <p style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.5rem;">Secure checkout via Gumroad &mdash; card, GCash, PayPal accepted. Download delivered instantly.</p>
@@ -886,7 +891,7 @@ service cloud.firestore {
                 <button class="modal-close" id="modalCloseBtn">&times;</button>
                 <h3>&#128722; Buy Full Version &mdash; &#8369;50</h3>
                 <p class="modal-sub">Secure checkout powered by <strong>Gumroad</strong>. Accepts GCash, credit/debit card, and PayPal. Download link delivered instantly after payment.</p>
-                <a href="https://jerichodoy.gumroad.com/l/uiexqq" target="_blank" rel="noopener"
+                <a href="https://jerichodoy.gumroad.com/l/uiexqq" class="gumroad-button" onclick="trackDownload('full_purchase_click')"
                    style="display:inline-block; margin:1rem 0 0.5rem; padding:0.85rem 2.2rem; background:var(--accent); color:#111; font-weight:800; font-size:1.1rem; border-radius:10px; text-decoration:none; letter-spacing:0.02em;">
                     &#128722; Purchase on Gumroad &mdash; &#8369;50
                 </a>
@@ -938,6 +943,7 @@ service cloud.firestore {
         <p>&copy; 2026 Beyond The Horizon &mdash; A thesis project. All rights reserved.</p>
     </footer>
 
+    <script src="https://gumroad.com/js/gumroad.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script type="module">
         const firebaseConfig = {
@@ -1363,83 +1369,70 @@ service cloud.firestore {
                 listEl.innerHTML = `<div class="orders-empty">Could not load orders: ${err.message}</div>`;
             }
         }
-        // ── Demo download tracking ─────────────────────────────────────────
+        // ── Download + purchase tracking ──────────────────────────────────
         window.trackDownload = async function(type) {
             try {
                 await addDoc(collection(db, "download_events"), { type, timestamp: serverTimestamp() });
             } catch(e) { /* non-critical */ }
         };
-
-        document.getElementById("ordersRefreshBtn").addEventListener("click", loadOrders);
+        // Listen for Gumroad overlay confirmed purchase postMessage
+        window.addEventListener("message", (e) => {
+            if (e.origin !== "https://gumroad.com") return;
+            try {
+                const raw = typeof e.data === "string" ? e.data : JSON.stringify(e.data);
+                if (raw.includes("purchase") || raw.includes("sale")) {
+                    trackDownload("full_purchase");
+                }
+            } catch(ex) { /* ignore */ }
+        });
         // ── Analytics Chart ───────────────────────────────────────────────
         let analyticsChartInstance = null;
         async function loadAnalyticsChart() {
             try {
-                // Earnings summary from paid orders
-                const ordSnap = await getDocs(collection(db, "orders"));
-                let totalEarned = 0, totalOrders = 0, paidOrders = 0, thisMonthEarned = 0;
-                const now = new Date();
-                ordSnap.forEach(d => {
-                    const od = d.data();
-                    totalOrders++;
-                    if (od.status === "paid") {
-                        paidOrders++;
-                        totalEarned += (od.amount || 50);
-                        if (od.timestamp) {
-                            const oDate = new Date(od.timestamp.seconds * 1000);
-                            if (oDate.getMonth() === now.getMonth() && oDate.getFullYear() === now.getFullYear())
-                                thisMonthEarned += (od.amount || 50);
-                        }
-                    }
-                });
-                const earningsRow = document.getElementById("earningsRow");
-                earningsRow.innerHTML = `
-                    <div class="earnings-card"><div class="earn-val">&#8369;${totalEarned}</div><div class="earn-lbl">Total Earned</div></div>
-                    <div class="earnings-card"><div class="earn-val">&#8369;${thisMonthEarned}</div><div class="earn-lbl">This Month</div></div>
-                    <div class="earnings-card"><div class="earn-val">${paidOrders} / ${totalOrders}</div><div class="earn-lbl">Paid Orders</div></div>
-                `;
-
-                // Download events chart
                 const snap = await getDocs(collection(db, "download_events"));
+                let totalDemo = 0, totalClicks = 0;
                 const counts = {};
                 for (let i = 6; i >= 0; i--) {
                     const d = new Date(); d.setDate(d.getDate() - i);
-                    counts[d.toLocaleDateString('en-PH', {month:'short', day:'numeric'})] = { demo:0, full:0 };
+                    counts[d.toLocaleDateString("en-PH", {month:"short", day:"numeric"})] = { demo:0, full:0 };
                 }
                 snap.forEach(docSnap => {
                     const ev = docSnap.data();
+                    if (ev.type === "demo")                totalDemo++;
+                    if (ev.type === "full_purchase_click") totalClicks++;
                     if (!ev.timestamp) return;
-                    const d   = new Date(ev.timestamp.seconds * 1000);
-                    const lbl = d.toLocaleDateString('en-PH', {month:'short', day:'numeric'});
-                    if (counts[lbl]) {
-                        if (ev.type === 'demo')            counts[lbl].demo++;
-                        else if (ev.type === 'full_order') counts[lbl].full++;
-                    }
+                    const lbl = new Date(ev.timestamp.seconds * 1000).toLocaleDateString("en-PH", {month:"short", day:"numeric"});
+                    if (!counts[lbl]) return;
+                    if (ev.type === "demo")                counts[lbl].demo++;
+                    if (ev.type === "full_purchase_click") counts[lbl].full++;
                 });
-                const labels   = Object.keys(counts);
-                const demoData = labels.map(l => counts[l].demo);
-                const fullData = labels.map(l => counts[l].full);
-                const ctx = document.getElementById('analyticsChart').getContext('2d');
+                document.getElementById("earningsRow").innerHTML = `
+                    <div class="earnings-card"><div class="earn-val">${totalDemo}</div><div class="earn-lbl">Demo Downloads</div></div>
+                    <div class="earnings-card"><div class="earn-val">${totalClicks}</div><div class="earn-lbl">Buy Now Clicks</div></div>
+                    <div class="earnings-card"><div class="earn-val">&#8369;${totalClicks * 50}<span style="font-size:0.6rem;color:var(--muted);display:block;">est. revenue</span></div><div class="earn-lbl">Est. Earned &bull; <a href="https://app.gumroad.com/sales" target="_blank" style="color:var(--accent);font-size:0.75rem;">verify &#8599;</a></div></div>
+                `;
+                const labels = Object.keys(counts);
+                const ctx = document.getElementById("analyticsChart").getContext("2d");
                 if (analyticsChartInstance) analyticsChartInstance.destroy();
                 analyticsChartInstance = new Chart(ctx, {
-                    type: 'bar',
+                    type: "bar",
                     data: {
                         labels,
                         datasets: [
-                            { label: 'Demo Downloads', data: demoData, backgroundColor: 'rgba(0,201,122,0.6)', borderColor: 'rgba(0,201,122,1)', borderWidth:1 },
-                            { label: 'Full Game Orders', data: fullData, backgroundColor: 'rgba(255,208,64,0.6)', borderColor: 'rgba(255,208,64,1)', borderWidth:1 }
+                            { label: "Demo Downloads",            data: labels.map(l => counts[l].demo), backgroundColor: "rgba(0,201,122,0.6)", borderColor: "rgba(0,201,122,1)", borderWidth:1 },
+                            { label: "Full Game (Buy Now Clicks)", data: labels.map(l => counts[l].full), backgroundColor: "rgba(255,208,64,0.6)", borderColor: "rgba(255,208,64,1)", borderWidth:1 }
                         ]
                     },
                     options: {
                         responsive: true,
-                        plugins: { legend: { labels: { color:'#ccc' } } },
+                        plugins: { legend: { labels: { color:"#ccc" } } },
                         scales: {
-                            x: { ticks:{ color:'#aaa' }, grid:{ color:'rgba(255,255,255,0.05)' } },
-                            y: { beginAtZero:true, ticks:{ color:'#aaa', stepSize:1 }, grid:{ color:'rgba(255,255,255,0.05)' } }
+                            x: { ticks:{ color:"#aaa" }, grid:{ color:"rgba(255,255,255,0.05)" } },
+                            y: { beginAtZero:true, ticks:{ color:"#aaa", stepSize:1 }, grid:{ color:"rgba(255,255,255,0.05)" } }
                         }
                     }
                 });
-            } catch(e) { console.warn('Chart error:', e); }
+            } catch(e) { console.warn("Chart error:", e); }
         }
     </script>
 </body>
