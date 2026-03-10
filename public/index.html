@@ -777,7 +777,7 @@
             <div class="auth-card">
                 <h2>Create Account</h2>
                 <div id="signupError" class="error-msg hidden"></div>
-                <div id="signupSuccess" class="success-msg hidden">Account created! Check your email to verify.</div>
+                <div id="signupSuccess" class="success-msg hidden">Account created! You're logged in.</div>
                 <form id="signupForm">
                     <div class="form-group">
                         <label>Username</label>
@@ -1235,12 +1235,10 @@ service firebase.storage {
                     suspension_reason: "",
                     created_at: serverTimestamp()
                 });
-                await sendEmailVerification(user);
                 signupError.classList.add("hidden");
                 signupSuccess.classList.remove("hidden");
-                signupSuccess.textContent = `Account created! Check ${email} for a verification link.`;
+                signupSuccess.textContent = `Account created! You're logged in.`;
                 signupForm.reset();
-                await signOut(auth);
             } catch (err) {
                 signupError.textContent = err.message;
                 signupError.classList.remove("hidden");
