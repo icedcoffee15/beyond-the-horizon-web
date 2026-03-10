@@ -977,7 +977,7 @@ service firebase.storage {
                     <a href="https://bth.gumroad.com/l/uiexqq" class="btn btn-secondary" target="_blank" rel="noopener" style="width:100%; display:block; text-align:center; box-sizing:border-box;" onclick="try{trackDownload('full_purchase_click')}catch(e){}">
                         &#128722; Buy Now &mdash; &#8369;50
                     </a>
-                    <p style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.5rem;">Gumroad secure checkout &mdash; GCash, card &amp; PayPal accepted. Download delivered instantly.</p>
+                    <p style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.5rem;">Gumroad secure checkout &mdash; credit/debit card accepted. Download delivered instantly.</p>
                 </div>
             </div>
         </section>
@@ -1018,7 +1018,7 @@ service firebase.storage {
             <div class="modal-box" style="text-align:center;">
                 <button class="modal-close" id="modalCloseBtn">&times;</button>
                 <h3>&#128722; Buy Full Version &mdash; &#8369;50</h3>
-                <p class="modal-sub">Secure checkout powered by <strong>Gumroad</strong>. Accepts GCash, credit/debit card, and PayPal. Download link delivered instantly after payment.</p>
+                <p class="modal-sub">Secure checkout powered by <strong>Gumroad</strong>. Credit/debit card accepted. Download link delivered instantly after payment.</p>
                 <a href="https://bth.gumroad.com/l/uiexqq" target="_blank" rel="noopener" onclick="try{trackDownload('full_purchase_click')}catch(e){}"
                    style="display:inline-block; margin:1rem 0 0.5rem; padding:0.85rem 2.2rem; background:var(--accent); color:#111; font-weight:800; font-size:1.1rem; border-radius:10px; text-decoration:none; letter-spacing:0.02em;">
                     &#128722; Purchase on Gumroad &mdash; &#8369;50
@@ -1105,7 +1105,7 @@ service firebase.storage {
     <div class="help-panel" id="helpPanel">
         <h4>&#10067; Need Help?</h4>
         <p><strong>Paid but no download link?</strong><br>Check your email inbox (including spam) for a receipt from Gumroad. Or visit your <a href="https://app.gumroad.com/library" target="_blank" style="color:var(--accent);">Gumroad Library</a>.</p>
-        <p><strong>Payment issues?</strong><br>Gumroad accepts GCash, credit/debit card, and PayPal. Make sure pop-ups are allowed.</p>
+        <p><strong>Payment issues?</strong><br>Gumroad accepts credit/debit card. Make sure pop-ups are allowed.</p>
         <p><strong>Contact us:</strong><br><a href="mailto:dodoy.jericho@gmail.com">dodoy.jericho@gmail.com</a></p>
     </div>
 
@@ -1212,12 +1212,6 @@ service firebase.storage {
                 const userCred = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCred.user;
                 await user.reload();
-                if (!user.emailVerified) {
-                    loginError.textContent = "Please verify your email before signing in.";
-                    loginError.classList.remove("hidden");
-                    await signOut(auth);
-                    return;
-                }
                 loginError.classList.add("hidden");
                 loginForm.reset();
             } catch (err) {
