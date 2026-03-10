@@ -556,6 +556,66 @@
         .bug-resolve-btn:hover { background: rgba(0,201,122,0.08); }
         .bug-empty { color: var(--muted); font-size: 0.88rem; padding: 1rem 0; text-align: center; }
 
+        /* ── User Management Table ── */
+        .admin-users-wrap { max-height:380px; overflow-y:auto; border:1px solid var(--border); border-radius:8px; margin-top:0.8rem; }
+        .admin-users-table { width:100%; border-collapse:collapse; font-size:0.84rem; }
+        .admin-users-table th { color:#aaa; font-size:0.74rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; padding:0.55rem 0.9rem; border-bottom:1px solid var(--border); text-align:left; background:rgba(255,255,255,0.02); position:sticky; top:0; }
+        .admin-users-table td { padding:0.6rem 0.9rem; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--text); vertical-align:middle; }
+        .admin-users-table tr:last-child td { border-bottom:none; }
+        .admin-users-table tr:hover td { background:rgba(255,255,255,0.02); }
+        .status-badge { display:inline-block; border-radius:20px; font-size:0.7rem; padding:0.15rem 0.65rem; font-weight:600; }
+        .status-badge.active    { background:rgba(0,201,122,0.12); color:var(--accent-green); border:1px solid rgba(0,201,122,0.3); }
+        .status-badge.suspended { background:rgba(255,150,0,0.12); color:#ff9a00; border:1px solid rgba(255,150,0,0.3); }
+        .status-badge.banned    { background:rgba(211,47,47,0.12); color:#ff7070; border:1px solid rgba(211,47,47,0.35); }
+        .user-action-btn { padding:0.2rem 0.55rem; font-size:0.71rem; font-weight:700; border-radius:4px; cursor:pointer; margin-right:0.3rem; transition:opacity 0.2s; background:transparent; }
+        .user-action-btn:hover { opacity:0.75; }
+        .btn-suspend   { color:#ff9a00; border:1px solid rgba(255,150,0,0.4); }
+        .btn-ban       { color:#ff7070; border:1px solid rgba(211,47,47,0.4); }
+        .btn-unsuspend { color:var(--accent-green); border:1px solid rgba(0,201,122,0.4); }
+        .users-empty { color:var(--muted); font-size:0.88rem; padding:1.5rem; text-align:center; }
+        /* ── Suspend / Ban Action Modal ── */
+        .action-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:2000; align-items:center; justify-content:center; padding:1rem; }
+        .action-modal-overlay.open { display:flex; }
+        .action-modal-box { background:var(--bg2); border:1px solid rgba(255,120,0,0.4); border-radius:12px; padding:2rem; max-width:440px; width:100%; }
+        .action-modal-box h3 { color:#ff9a00; margin-bottom:0.4rem; }
+        .action-modal-box .modal-target { font-size:0.85rem; color:var(--muted); margin-bottom:1rem; }
+        .action-modal-box textarea { width:100%; padding:0.65rem 0.8rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:var(--text); border-radius:6px; font-size:0.9rem; font-family:inherit; resize:vertical; min-height:70px; margin-bottom:1rem; }
+        .action-modal-box textarea:focus { outline:none; border-color:#ff9a00; }
+        .action-modal-buttons { display:flex; gap:0.8rem; justify-content:flex-end; }
+        .btn-modal-cancel  { background:transparent; border:1px solid var(--border); color:var(--muted); padding:0.5rem 1.1rem; border-radius:6px; cursor:pointer; font-size:0.88rem; }
+        .btn-modal-confirm { padding:0.5rem 1.3rem; border:none; border-radius:6px; cursor:pointer; font-weight:700; font-size:0.88rem; }
+        .btn-modal-suspend { background:#ff9a00; color:#000; }
+        .btn-modal-ban     { background:#e74c3c; color:#fff; }
+        .btn-modal-reinstate { background:var(--accent-green); color:#000; }
+        /* ── Player Reports (admin list) ── */
+        .report-item { background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:1rem 1.2rem; margin-bottom:0.6rem; }
+        .report-item.resolved { opacity:0.45; }
+        .report-item-header { display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.35rem; }
+        .report-item-target { font-size:0.9rem; font-weight:700; color:#fff; }
+        .report-item-meta { font-size:0.75rem; color:var(--muted); margin-bottom:0.4rem; }
+        .report-item-reason { font-size:0.85rem; color:#ccc; white-space:pre-wrap; word-break:break-word; }
+        .report-screenshot-thumb { display:block; margin-top:0.6rem; max-width:200px; border-radius:6px; border:1px solid var(--border); cursor:pointer; }
+        .report-screenshot-thumb:hover { border-color:var(--accent); }
+        .report-resolve-btn { margin-top:0.6rem; padding:0.25rem 0.7rem; background:transparent; border:1px solid rgba(0,201,122,0.35); color:var(--accent-green); border-radius:4px; cursor:pointer; font-size:0.75rem; transition:all 0.2s; }
+        .report-resolve-btn:hover { background:rgba(0,201,122,0.08); }
+        .reports-empty { color:var(--muted); font-size:0.88rem; padding:1rem 0; text-align:center; }
+        /* ── Report a Player (player form) ── */
+        .player-report-section { background:var(--bg2); border:1px solid rgba(0,212,255,0.14); border-radius:12px; padding:2.5rem 2rem; margin:4rem auto; max-width:700px; }
+        .player-report-section h2 { font-size:1.3rem; font-weight:700; color:#fff; margin-bottom:0.3rem; }
+        .player-report-section > p { color:var(--muted); font-size:0.88rem; margin-bottom:1.8rem; }
+        .player-report-section textarea { width:100%; padding:0.65rem 0.8rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:var(--text); border-radius:6px; font-size:0.92rem; font-family:inherit; resize:vertical; min-height:90px; }
+        .player-report-section textarea:focus { outline:none; border-color:var(--accent); background:rgba(0,212,255,0.06); }
+        .file-upload-label { display:inline-flex; align-items:center; gap:0.5rem; padding:0.55rem 1rem; background:rgba(255,255,255,0.05); border:1px dashed var(--border); border-radius:6px; cursor:pointer; font-size:0.85rem; color:var(--muted); transition:border-color 0.2s,color 0.2s; }
+        .file-upload-label:hover { border-color:var(--accent); color:var(--accent); }
+        .file-upload-label input[type=file] { display:none; }
+        /* ── Download section uplift ── */
+        .dl-features { list-style:none; text-align:left; margin:0.7rem 0 1.4rem; padding:0; }
+        .dl-features li { font-size:0.83rem; color:#ccc; padding:0.2rem 0; display:flex; align-items:center; gap:0.5rem; }
+        .dl-features .tick  { color:var(--accent-green); }
+        .dl-features .cross { color:#444; }
+        .download-card.featured { border-color:rgba(255,208,64,0.5); box-shadow:0 0 28px rgba(255,208,64,0.07); position:relative; overflow:visible; }
+        .download-card.featured::before { content:'FULL EXPERIENCE'; position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:#ffd040; color:#000; font-size:0.65rem; font-weight:800; padding:0.2rem 0.9rem; border-radius:20px; letter-spacing:0.08em; white-space:nowrap; }
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .auth-section { grid-template-columns: 1fr; }
@@ -575,6 +635,7 @@
                 <a href="#screenshots">Gallery</a>
                 <a href="#download">Download</a>
                 <a href="#multiplayer">Multiplayer</a>
+                <a href="#adminPanel" class="hidden" id="navAdminLink" style="color:#ff9a00;">&#9881; Admin</a>
                 <div class="user-status" id="userStatus">Not signed in</div>
                 <button class="logout-btn hidden" id="logoutBtn">Sign Out</button>
             </nav>
@@ -773,7 +834,7 @@
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userId} {
-      allow read, write: if request.auth != null && (
+      allow read, write: if request.auth != null &amp;&amp; (
         request.auth.uid == userId ||
         request.auth.token.email == 'dodoy.jericho@gmail.com'
       );
@@ -790,8 +851,24 @@ service cloud.firestore {
     }
     match /bug_reports/{reportId} {
       allow create: if request.auth != null;
-      allow read, update: if request.auth != null &&
+      allow read, update: if request.auth != null &amp;&amp;
         request.auth.token.email == 'dodoy.jericho@gmail.com';
+    }
+    match /player_reports/{reportId} {
+      allow create: if request.auth != null;
+      allow read, update: if request.auth != null &amp;&amp;
+        request.auth.token.email == 'dodoy.jericho@gmail.com';
+    }
+  }
+}</code>
+                <br><br><strong style="color:#ff9a00;">Firebase Storage:</strong> To enable screenshot uploads, go to Firebase Console &rarr; Storage &rarr; Rules and set:<br>
+                <code>rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /player_reports/{allPaths=**} {
+      allow read: if request.auth != null &amp;&amp;
+        request.auth.token.email == 'dodoy.jericho@gmail.com';
+      allow write: if request.auth != null;
     }
   }
 }</code>
@@ -825,6 +902,40 @@ service cloud.firestore {
             <div class="bug-list" id="bugList">
                 <div class="bug-empty">Loading bug reports...</div>
             </div>
+
+            <div class="admin-divider"></div>
+
+            <!-- ── Registered Users ── -->
+            <div class="orders-header">
+                <h3>&#128101; Registered Users</h3>
+                <button class="bug-refresh-btn" id="usersRefreshBtn">&#8635; Refresh</button>
+            </div>
+            <div class="users-empty" id="usersLoading">Loading users...</div>
+            <div class="admin-users-wrap" id="adminUsersWrap" style="display:none;">
+                <table class="admin-users-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersBody"></tbody>
+                </table>
+            </div>
+
+            <div class="admin-divider"></div>
+
+            <!-- ── Player Reports ── -->
+            <div class="admin-bugs-header">
+                <h3>&#128681; Player Reports</h3>
+                <button class="bug-refresh-btn" id="reportsRefreshBtn">&#8635; Refresh</button>
+            </div>
+            <div class="bug-list" id="playerReportList">
+                <div class="reports-empty">Loading reports...</div>
+            </div>
         </section>
 
         <!-- â”€â”€ Download â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
@@ -836,20 +947,37 @@ service cloud.firestore {
             <div class="download-cards">
                 <div class="download-card">
                     <div class="badge-free">FREE</div>
-                    <h3>Demo &mdash; Chapter 1</h3>
-                    <p>Stranded on a tropical island. Solo play. Craft, survive, and escape.</p>
-                    <a href="https://drive.google.com/uc?export=download&id=1oBTjCOuQynQ_emnjHCa1tGXVw-iGkQY4" target="_blank" rel="noopener" class="btn btn-primary" id="demoDownloadBtn" onclick="trackDownload('demo')">
+                    <h3>Free Demo &mdash; Chapter 1</h3>
+                    <p>Stranded on a tropical island. Solo play only.</p>
+                    <ul class="dl-features">
+                        <li><span class="tick">&#10003;</span> Chapter 1: Signal for Rescue</li>
+                        <li><span class="tick">&#10003;</span> Full crafting &amp; survival mechanics</li>
+                        <li><span class="tick">&#10003;</span> Wildlife &amp; combat</li>
+                        <li><span class="tick">&#10003;</span> Dynamic day/night cycle</li>
+                        <li><span class="cross">&#10007;</span> Chapters 2, 3 &amp; 4</li>
+                        <li><span class="cross">&#10007;</span> Multiplayer co-op</li>
+                        <li><span class="cross">&#10007;</span> Endless Survival Mode</li>
+                    </ul>
+                    <a href="https://drive.google.com/uc?export=download&id=1oBTjCOuQynQ_emnjHCa1tGXVw-iGkQY4" target="_blank" rel="noopener" class="btn btn-primary" id="demoDownloadBtn" onclick="trackDownload('demo')" style="width:100%; display:block; text-align:center; box-sizing:border-box;">
                         &#11015; Download Free Demo
                     </a>
                 </div>
-                <div class="download-card">
+                <div class="download-card featured">
                     <div class="badge-paid">&#8369;50</div>
                     <h3>Full Version &mdash; All 4 Chapters</h3>
-                    <p>Chapters 1&ndash;4 + Endless Mode. Multiplayer co-op, cloud saves, full story.</p>
+                    <p>The complete survival story across 4 unique environments.</p>
+                    <ul class="dl-features">
+                        <li><span class="tick">&#10003;</span> All 4 chapters + full story</li>
+                        <li><span class="tick">&#10003;</span> 2-player online co-op</li>
+                        <li><span class="tick">&#10003;</span> Endless Survival Mode</li>
+                        <li><span class="tick">&#10003;</span> PvP race mode</li>
+                        <li><span class="tick">&#10003;</span> Cloud save &amp; player profile</li>
+                        <li><span class="tick">&#10003;</span> All biomes: jungle, ocean, desert, extraction</li>
+                    </ul>
                     <a href="https://bth.gumroad.com/l/uiexqq" class="btn btn-secondary" target="_blank" rel="noopener" style="width:100%; display:block; text-align:center; box-sizing:border-box;" onclick="try{trackDownload('full_purchase_click')}catch(e){}">
                         &#128722; Buy Now &mdash; &#8369;50
                     </a>
-                    <p style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.5rem;">Secure checkout via Gumroad &mdash; card, GCash, PayPal accepted. Download delivered instantly.</p>
+                    <p style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.5rem;">Gumroad secure checkout &mdash; GCash, card &amp; PayPal accepted. Download delivered instantly.</p>
                 </div>
             </div>
         </section>
@@ -907,6 +1035,19 @@ service cloud.firestore {
         </div>
 
         <!-- ── Report a Bug ──────────────────────────────────────────────────── -->
+        <!-- ── Suspend / Ban Confirmation Modal ── -->
+        <div class="action-modal-overlay" id="actionModal">
+            <div class="action-modal-box">
+                <h3 id="actionModalTitle">Suspend User</h3>
+                <p class="modal-target" id="actionModalTarget"></p>
+                <textarea id="actionReason" placeholder="Reason (shown to the player in-game)..."></textarea>
+                <div class="action-modal-buttons">
+                    <button class="btn-modal-cancel" id="actionModalCancel">Cancel</button>
+                    <button class="btn-modal-confirm" id="actionModalConfirm">Confirm</button>
+                </div>
+            </div>
+        </div>
+
         <section class="bug-report-section hidden" id="bugReportSection">
             <h2>&#128027; Report a Bug</h2>
             <p>Found something broken? Let us know and we'll fix it before the defense.</p>
@@ -923,6 +1064,35 @@ service cloud.firestore {
                 </div>
                 <div class="form-group">
                     <button type="submit">Submit Bug Report</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- ── Report a Player ── -->
+        <section class="player-report-section hidden" id="playerReportSection">
+            <h2>&#128681; Report a Player</h2>
+            <p>Witnessed griefing, cheating, or inappropriate behaviour? Submit a report and we'll review it.</p>
+            <div id="playerReportError" class="error-msg hidden"></div>
+            <div id="playerReportSuccess" class="success-msg hidden">Report submitted. Thank you!</div>
+            <form id="playerReportForm">
+                <div class="form-group">
+                    <label>Reported Player Username</label>
+                    <input type="text" id="reportedUsername" placeholder="e.g. player123" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea id="reportReason" placeholder="Describe what happened in detail..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Screenshot (optional)</label>
+                    <label class="file-upload-label">
+                        &#128247; Attach Screenshot
+                        <input type="file" id="reportScreenshot" accept="image/*">
+                    </label>
+                    <div id="reportFilePreview" style="font-size:0.8rem; color:var(--accent-green); margin-top:0.35rem; display:none;"></div>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Submit Report</button>
                 </div>
             </form>
         </section>
@@ -962,13 +1132,16 @@ service cloud.firestore {
                  sendEmailVerification, updateProfile, onAuthStateChanged, signOut,
                  sendPasswordResetEmail
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getFirestore, collection, getCountFromServer, doc, getDoc,
+        import { getFirestore, collection, getCountFromServer, doc, getDoc, setDoc,
                  addDoc, getDocs, orderBy, query, where, serverTimestamp, updateDoc
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
-        const app  = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db   = getFirestore(app);
+        const app     = initializeApp(firebaseConfig);
+        const auth    = getAuth(app);
+        const db      = getFirestore(app);
+        const storage = getStorage(app);
 
         const authSection  = document.getElementById("authSection");
         const adminPanel   = document.getElementById("adminPanel");
@@ -987,18 +1160,24 @@ service cloud.firestore {
                 logoutBtn.classList.remove("hidden");
                 document.getElementById("playerProfile").classList.remove("hidden");
                 document.getElementById("bugReportSection").classList.remove("hidden");
+                document.getElementById("playerReportSection").classList.remove("hidden");
                 loadUserProfile(user);
                 if (ADMIN_EMAILS.includes(user.email)) {
                     adminPanel.classList.remove("hidden");
+                    document.getElementById("navAdminLink").classList.remove("hidden");
                     loadUserCount();
                     loadBugReports();
                     loadAnalyticsChart();
+                    loadAllUsers();
+                    loadPlayerReports();
                 }
             } else {
                 authSection.classList.remove("hidden");
                 adminPanel.classList.add("hidden");
+                document.getElementById("navAdminLink").classList.add("hidden");
                 document.getElementById("playerProfile").classList.add("hidden");
                 document.getElementById("bugReportSection").classList.add("hidden");
+                document.getElementById("playerReportSection").classList.add("hidden");
                 userStatus.textContent = "Not signed in";
                 logoutBtn.classList.add("hidden");
             }
@@ -1056,6 +1235,12 @@ service cloud.firestore {
                 const userCred = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCred.user;
                 await updateProfile(user, { displayName: username });
+                await setDoc(doc(db, "users", user.uid), {
+                    username, email,
+                    status: "active",
+                    suspension_reason: "",
+                    created_at: serverTimestamp()
+                });
                 await sendEmailVerification(user);
                 signupError.classList.add("hidden");
                 signupSuccess.classList.remove("hidden");
@@ -1374,6 +1559,239 @@ service cloud.firestore {
                 });
             } catch(e) { console.warn("Chart error:", e); }
         }
+
+        // ── Admin: Load All Users ─────────────────────────────────────────────
+        async function loadAllUsers() {
+            const loadingEl = document.getElementById("usersLoading");
+            const wrapEl    = document.getElementById("adminUsersWrap");
+            const bodyEl    = document.getElementById("adminUsersBody");
+            loadingEl.textContent = "Loading users...";
+            loadingEl.style.display = "block";
+            wrapEl.style.display = "none";
+            try {
+                const snap = await getDocs(collection(db, "users"));
+                bodyEl.innerHTML = "";
+                if (snap.empty) {
+                    loadingEl.textContent = "No registered users found.";
+                    return;
+                }
+                // Sort by created_at descending client-side
+                const docs = snap.docs.sort((a, b) => {
+                    const ta = a.data().created_at?.seconds || 0;
+                    const tb = b.data().created_at?.seconds || 0;
+                    return tb - ta;
+                });
+                docs.forEach(docSnap => {
+                    const d      = docSnap.data();
+                    const uid    = docSnap.id;
+                    const name   = escHtml(d.username || d.displayName || "—");
+                    const email  = escHtml(d.email || "—");
+                    const status = d.status || "active";
+                    const joined = d.created_at
+                        ? new Date(d.created_at.seconds * 1000).toLocaleDateString("en-PH")
+                        : "—";
+                    const reasonNote = (status !== "active" && d.suspension_reason)
+                        ? `<br><small style="color:#888;font-size:0.72rem;">${escHtml(d.suspension_reason)}</small>`
+                        : "";
+                    let actions = "";
+                    if (status === "active") {
+                        actions = `<button class="user-action-btn btn-suspend" data-uid="${uid}" data-name="${name}" data-action="suspend">Suspend</button>`
+                                + `<button class="user-action-btn btn-ban" data-uid="${uid}" data-name="${name}" data-action="ban">Ban</button>`;
+                    } else {
+                        actions = `<button class="user-action-btn btn-unsuspend" data-uid="${uid}" data-name="${name}" data-action="reinstate">Reinstate</button>`;
+                        if (status === "suspended") {
+                            actions += `<button class="user-action-btn btn-ban" data-uid="${uid}" data-name="${name}" data-action="ban">Ban</button>`;
+                        }
+                    }
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${name}</td>
+                        <td style="font-size:0.8rem; color:var(--muted);">${email}</td>
+                        <td><span class="status-badge ${status}">${status}${reasonNote}</span></td>
+                        <td style="font-size:0.78rem; color:var(--muted);">${joined}</td>
+                        <td>${actions}</td>
+                    `;
+                    bodyEl.appendChild(tr);
+                });
+                loadingEl.style.display = "none";
+                wrapEl.style.display    = "block";
+                bodyEl.querySelectorAll(".user-action-btn").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        openActionModal(btn.dataset.uid, btn.dataset.name, btn.dataset.action);
+                    });
+                });
+            } catch (err) {
+                loadingEl.textContent = "Could not load users: " + err.message;
+            }
+        }
+
+        // ── Admin: Action Modal (suspend / ban / reinstate) ───────────────────
+        let _actionTarget = { uid: null, action: null };
+
+        function openActionModal(uid, name, action) {
+            _actionTarget = { uid, action };
+            const modal      = document.getElementById("actionModal");
+            const titleEl    = document.getElementById("actionModalTitle");
+            const targetEl   = document.getElementById("actionModalTarget");
+            const confirmBtn = document.getElementById("actionModalConfirm");
+            const reasonEl   = document.getElementById("actionReason");
+            reasonEl.value = "";
+            confirmBtn.disabled = false;
+            if (action === "reinstate") {
+                titleEl.textContent    = "Reinstate User";
+                targetEl.innerHTML     = `Restore access for <strong>${name}</strong>?`;
+                confirmBtn.className   = "btn-modal-confirm btn-modal-reinstate";
+                confirmBtn.textContent = "Reinstate";
+                reasonEl.style.display = "none";
+            } else if (action === "suspend") {
+                titleEl.textContent    = "Suspend User";
+                targetEl.innerHTML     = `Suspend <strong>${name}</strong>? They will see the reason when they try to sign in.`;
+                confirmBtn.className   = "btn-modal-confirm btn-modal-suspend";
+                confirmBtn.textContent = "Suspend";
+                reasonEl.style.display = "block";
+                reasonEl.placeholder   = "Reason for suspension (shown to the player)...";
+            } else {
+                titleEl.textContent    = "Permanently Ban User";
+                targetEl.innerHTML     = `Permanently ban <strong>${name}</strong>? This is hard to undo.`;
+                confirmBtn.className   = "btn-modal-confirm btn-modal-ban";
+                confirmBtn.textContent = "Ban Permanently";
+                reasonEl.style.display = "block";
+                reasonEl.placeholder   = "Reason for ban (shown to the player)...";
+            }
+            modal.classList.add("open");
+        }
+
+        document.getElementById("actionModalCancel").addEventListener("click", () => {
+            document.getElementById("actionModal").classList.remove("open");
+        });
+
+        document.getElementById("actionModalConfirm").addEventListener("click", async () => {
+            const { uid, action } = _actionTarget;
+            const reason = document.getElementById("actionReason").value.trim();
+            const btn    = document.getElementById("actionModalConfirm");
+            btn.disabled    = true;
+            btn.textContent = "Saving...";
+            try {
+                if (action === "reinstate") {
+                    await updateDoc(doc(db, "users", uid), { status: "active", suspension_reason: "" });
+                } else if (action === "suspend") {
+                    await updateDoc(doc(db, "users", uid), {
+                        status: "suspended",
+                        suspension_reason: reason || "Account suspended by administrator."
+                    });
+                } else {
+                    await updateDoc(doc(db, "users", uid), {
+                        status: "banned",
+                        suspension_reason: reason || "Account permanently banned."
+                    });
+                }
+                document.getElementById("actionModal").classList.remove("open");
+                loadAllUsers();
+            } catch (err) {
+                btn.textContent = "Error — " + err.message;
+                btn.disabled    = false;
+            }
+        });
+
+        document.getElementById("usersRefreshBtn").addEventListener("click", loadAllUsers);
+
+        // ── Admin: Load Player Reports ────────────────────────────────────────
+        async function loadPlayerReports() {
+            const listEl = document.getElementById("playerReportList");
+            listEl.innerHTML = '<div class="reports-empty">Loading...</div>';
+            try {
+                const q    = query(collection(db, "player_reports"), orderBy("timestamp", "desc"));
+                const snap = await getDocs(q);
+                if (snap.empty) {
+                    listEl.innerHTML = '<div class="reports-empty">No player reports yet.</div>';
+                    return;
+                }
+                listEl.innerHTML = "";
+                snap.forEach(docSnap => {
+                    const d    = docSnap.data();
+                    const date = d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleString() : "—";
+                    const item = document.createElement("div");
+                    item.className = "report-item" + (d.status === "resolved" ? " resolved" : "");
+                    item.innerHTML = `
+                        <div class="report-item-header">
+                            <span class="report-item-target">Reported: <strong>${escHtml(d.reported_username)}</strong></span>
+                            <span class="bug-badge ${d.status === "resolved" ? "resolved" : "new"}">${d.status === "resolved" ? "Resolved" : "Pending"}</span>
+                        </div>
+                        <div class="report-item-meta">By ${escHtml(d.reporter_name)} &middot; ${date}</div>
+                        <div class="report-item-reason">${escHtml(d.reason)}</div>
+                        ${d.screenshot_url ? `<a href="${escHtml(d.screenshot_url)}" target="_blank" rel="noopener"><img class="report-screenshot-thumb" src="${escHtml(d.screenshot_url)}" alt="Screenshot"></a>` : ""}
+                        ${d.status !== "resolved" ? `<button class="report-resolve-btn" data-id="${docSnap.id}">&#10003; Mark Resolved</button>` : ""}
+                    `;
+                    listEl.appendChild(item);
+                });
+                listEl.querySelectorAll(".report-resolve-btn").forEach(btn => {
+                    btn.addEventListener("click", async () => {
+                        btn.disabled    = true;
+                        btn.textContent = "Saving...";
+                        try {
+                            await updateDoc(doc(db, "player_reports", btn.dataset.id), { status: "resolved" });
+                            loadPlayerReports();
+                        } catch (err) {
+                            btn.textContent = "Error";
+                        }
+                    });
+                });
+            } catch (err) {
+                listEl.innerHTML = `<div class="reports-empty">Could not load reports: ${err.message}</div>`;
+            }
+        }
+
+        document.getElementById("reportsRefreshBtn").addEventListener("click", loadPlayerReports);
+
+        // ── Player: Screenshot file preview ──────────────────────────────────
+        document.getElementById("reportScreenshot").addEventListener("change", (e) => {
+            const file    = e.target.files[0];
+            const preview = document.getElementById("reportFilePreview");
+            if (file) {
+                preview.textContent  = "📎 " + file.name;
+                preview.style.display = "block";
+            } else {
+                preview.style.display = "none";
+            }
+        });
+
+        // ── Player: Submit report ─────────────────────────────────────────────
+        document.getElementById("playerReportForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const user     = auth.currentUser;
+            if (!user) return;
+            const reported = document.getElementById("reportedUsername").value.trim();
+            const reason   = document.getElementById("reportReason").value.trim();
+            const fileEl   = document.getElementById("reportScreenshot");
+            const errEl    = document.getElementById("playerReportError");
+            const okEl     = document.getElementById("playerReportSuccess");
+            errEl.classList.add("hidden");
+            okEl.classList.add("hidden");
+            let screenshotUrl = "";
+            try {
+                if (fileEl.files[0]) {
+                    const file    = fileEl.files[0];
+                    const fileRef = storageRef(storage, `player_reports/${Date.now()}_${file.name}`);
+                    const snap2   = await uploadBytes(fileRef, file);
+                    screenshotUrl = await getDownloadURL(snap2.ref);
+                }
+                await addDoc(collection(db, "player_reports"), {
+                    reported_username: reported,
+                    reason,
+                    screenshot_url:   screenshotUrl,
+                    reporter_uid:     user.uid,
+                    reporter_name:    user.displayName || user.email,
+                    timestamp:        serverTimestamp(),
+                    status:           "pending"
+                });
+                okEl.classList.remove("hidden");
+                document.getElementById("playerReportForm").reset();
+                document.getElementById("reportFilePreview").style.display = "none";
+            } catch (err) {
+                errEl.textContent = "Failed to submit: " + err.message;
+                errEl.classList.remove("hidden");
+            }
+        });
     </script>
 </body>
 </html>
